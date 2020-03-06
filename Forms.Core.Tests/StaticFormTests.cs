@@ -1,18 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
+using Forms.Core.Forms;
 using Forms.Core.Forms.Afcs;
 using Forms.Core.Forms.Afip;
 using Forms.Core.Models.Static;
+using Forms.Core.Repositories.Interfaces;
+using Forms.Core.Services;
+using Forms.Core.Services.Interfaces;
+using Moq;
 using Xunit;
+
 namespace Forms.Core.Tests
 {
     public class StaticFormTests
     {
         public static IEnumerable<object[]> Forms = new[]
         {
-            new[] {Afip.Form},
-            new[] {Afcs.Form},
+            new object[] {Afip.Form},
+            new object[] {Afcs.Form},
         };
+
         [Theory]
         [MemberData(nameof(Forms))]
         public void AllTasksHaveUniqueIds(Form form)
@@ -23,6 +30,7 @@ namespace Forms.Core.Tests
                 Assert.Single(form.Tasks.Where(x => x.Id == section.Id));
             }
         }
+
 
         [Theory]
         [MemberData(nameof(Forms))]
@@ -39,6 +47,7 @@ namespace Forms.Core.Tests
                 {
                     Assert.NotNull(item.Id);
                     Assert.Single(taskItems.Where(x => x.Id == item.Id));
+
                     if (item is SubTask st)
                     {
                         CheckTaskItems(st.TaskItems);
@@ -46,6 +55,7 @@ namespace Forms.Core.Tests
                 }
             }
         }
+
         [Theory]
         [MemberData(nameof(Forms))]
         public void AllNextPageIdsExist(Form form)
@@ -63,6 +73,7 @@ namespace Forms.Core.Tests
                     {
                         Assert.NotNull(taskItems.FirstOrDefault(x => x.Id == item.NextPageId));
                     }
+
                     if (item is SubTask st)
                     {
                         CheckTaskItems(st.TaskItems);
@@ -70,6 +81,7 @@ namespace Forms.Core.Tests
                 }
             }
         }
+
         [Theory]
         [MemberData(nameof(Forms))]
         public void AllTasksWithMoreThanOneTaskHaveATaskList(Form form)
@@ -79,6 +91,7 @@ namespace Forms.Core.Tests
                 Assert.NotNull(form.TaskListPage);
             };
         }
+
         [Theory]
         [MemberData(nameof(Forms))]
         public void WhenFormHasATaskList__AllTasksHaveATaskListGroup(Form form)
@@ -90,6 +103,23 @@ namespace Forms.Core.Tests
                     Assert.True(task.GroupNameIndex < form.TaskGroups.Count);
                 }
             }
+        }
+
+        [Theory]
+        [MemberData(nameof(Forms))]
+        public async System.Threading.Tasks.Task AGraphCanBeConstructedUsingTheForm(Form form) // checks no errors are thrown in the graph construction
+        {
+            // Arrange
+            var repositoryMock = new Mock<IFormRepository>();
+            var formProvider = new Mock<IStaticFormProvider>();
+            formProvider.Setup(x => x.GetForm(It.IsAny<FormType>())).Returns(form);
+            var formService = new FormService(repositoryMock.Object, formProvider.Object);
+            
+            // Act
+            var result = await formService.InitialiseForm("test", default);
+            
+            // Assert
+            Assert.NotNull(result);
         }
     }
 }
