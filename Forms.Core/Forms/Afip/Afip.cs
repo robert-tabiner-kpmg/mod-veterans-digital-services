@@ -13,7 +13,7 @@ namespace Forms.Core.Forms.Afip
 {
     public static class Afip
     {
-        public static Form Form => new Form
+        public static Form Form => new Form 
         {
             Name = "Afip claim form",
             TaskListPage = null,
