@@ -1,0 +1,10 @@
+@using Forms.Web.Models.FormComponents.Enums
+
+@{
+    var isSecondaryButton  = Model.Variant == ButtonVariants.Secondary;
+    var isWarningButton = Model.Variant == ButtonVariants.Warning;
+}
+
+<button class="@($"govuk-button{(isSecondaryButton ? " govuk-button--secondary" : string.Empty)}{(isWarningButton  ? " govuk-button--warning" : string.Empty)}")">
+    @Model.Text
+</button>

@@ -1,0 +1,65 @@
+@using Common.Constants
+@using Forms.Core.Models.InFlight
+@using Forms.Core.Models.Questions
+@using Forms.Web.Models.FormComponents
+@using Forms.Web.Models.FormComponents.Enums
+@model Forms.Core.NodeHandlers.PhysicalNodeHandlers.Models.PostTask.ConsentPageResponse;
+
+@{
+    ViewData["Title"] = "Consent";
+    var currentQuestionIndex = 0;
+    
+    var inFlightAnswers = ViewData[FormConstants.TempDataAnswers] as IDictionary<string, Answer> ?? new Dictionary<string, Answer>();
+    var inFlightErrors = ViewData[FormConstants.TempDataErrors] as IDictionary<string, string> ?? new Dictionary<string, string>();
+}
+
+<div>
+    <h1 class="govuk-heading-xl">@Model.Page.Header</h1>
+
+    @using (Html.BeginForm("SubmitForm", "Form", new { currentNodeId = Model.CurrentNodeId }, FormMethod.Post))
+    {
+        <input type="hidden" value="@Model.CurrentNodeId" name="@nameof(InFlightPage.NodeId)" id="@nameof(InFlightPage.NodeId)"/>
+
+        <h1 class="govuk-heading-l">Declaration:</h1>
+        <ul class = "govuk-list govuk-list--bullet">
+            <li>I confirm that the information I have given is accurate and complete to the best of my knowledge and belief</li>
+            <li>I understand that the information and personal data I have provided in this form, and any information and personal data I provide subsequently, may be used by the MOD in connection with my claim, or any subsequent reconsideration, review or appeal, under the AFCS or the Service Pensions Order (SPO) or any other schemes administered by Veterans UK</li>
+            <li>I agree to refund any sum paid as a result of this claim in the event that an overpayment is made for any reason</li>
+            <li>I have reviewed the supporting information and I am not claiming any conflicting payments</li>
+        </ul>
+        foreach (var question in Model.Page.Questions)
+        {
+            inFlightAnswers.TryGetValue(question.Id, out var answer);
+            inFlightErrors.TryGetValue(question.Id, out var error);
+            var additionalViewData = new { currentQuestionIndex, answer, error };
+
+            <div class="form-question">
+                <input type="hidden" value="@question.Id" name="@($"Questions[{currentQuestionIndex}].Id")" id="@($"Questions[{currentQuestionIndex}].Id")"/>
+
+                @switch (question)
+                {
+                    case TextInputQuestion textInputQuestion:
+                        @Html.EditorFor(x => textInputQuestion, additionalViewData)
+                        break;
+                    case TextareaQuestion textareaQuestion:
+                        @Html.EditorFor(x => textareaQuestion, additionalViewData)
+                        break;
+                    case RadioQuestion radioQuestion:
+                        @Html.EditorFor(x => radioQuestion, additionalViewData)
+                        break;
+                    case DateInputQuestion dateInputQuestion:
+                        @Html.EditorFor(x => dateInputQuestion, additionalViewData)
+                        break;
+                    case CheckboxQuestion checkboxQuestion:
+                        @Html.EditorFor(x => checkboxQuestion, additionalViewData)
+                        break;
+                }
+            </div>                                                   
+            currentQuestionIndex++;
+        }
+        <p class = "govuk-body">I must immediately inform the MoD of any changes</p>
+        {
+            await Html.RenderPartialAsync("FormComponents/_Button", new Button {Text = "Submit", Variant = ButtonVariants.Primary});
+        }
+    }
+</div>

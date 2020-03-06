@@ -1,0 +1,60 @@
+@using Common.Constants
+@using Forms.Core.Models.InFlight
+@using Forms.Web.Models.FormComponents
+@model Forms.Core.Models.Questions.CheckboxQuestion
+
+@{
+  var hasHeading = !string.IsNullOrEmpty(@Model.Label);
+  var hasHint = !string.IsNullOrEmpty(@Model.Hint);
+  var error = ViewData["error"] as string;
+  var hasError = !string.IsNullOrEmpty(error);
+  var formGroupClassName = $"govuk-form-group {(hasError ? "govuk-form-group--error" : string.Empty)}";
+  var describedByName = $"{(hasHint ? $"{Model.Id}-hint" : string.Empty)} {(hasError ? $"{Model.Id}-error" : string.Empty)}";
+  var answer = ViewData["answer"] as Answer;
+}
+
+<input
+  value="@AnswerType.Checkbox"
+  id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+  name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+  type="hidden"/>
+
+<div class="@formGroupClassName" aria-describedby="@describedByName">
+  <fieldset class="govuk-fieldset">
+    @if (hasHeading)
+    {
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          @Model.Label
+        </h1>
+      </legend>
+    }
+    @if (hasHint)
+    {
+      await Html.RenderPartialAsync("FormComponents/_Hint", new Hint {Id = $"{Model.Id}-hint", Text = Model.Hint});
+    }
+    @if (hasError)
+    {
+        await Html.RenderPartialAsync("FormComponents/_ErrorMessage", new ErrorMessage {Id = $"{Model.Id}-error", Error = error});
+    }
+    <div class= "govuk-checkboxes">
+      @foreach(var option in @Model.Options)
+      {
+        string currentOptionIndex = Model.Options.IndexOf(option).ToString();
+      
+        <div class="govuk-checkboxes__item">
+          <input
+            class="govuk-checkboxes__input"
+            id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[{currentOptionIndex}]")"
+            name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[{currentOptionIndex}]")"
+            type="checkbox"
+            @(answer != null && answer.Values.ContainsKey(currentOptionIndex) ? "checked" : string.Empty)
+            value="@option">
+          <label class="govuk-label govuk-checkboxes__label" for="@Model.Id">
+            @option
+          </label>
+        </div>
+      }
+    </div>
+  </fieldset>
+</div>

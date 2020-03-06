@@ -1,0 +1,54 @@
+@using System.Text
+@using Forms.Core.Models.Display
+@using Forms.Core.Models.Static
+@using Forms.Web.Models.FormComponents
+@using Forms.Web.Models.FormComponents.Enums
+@model Forms.Core.NodeHandlers.PhysicalNodeHandlers.Models.TaskItem.TaskSummaryResponse;
+
+@{
+    string RenderSummaryRow(string key, string value, string nodeId)
+    {
+        return new StringBuilder()
+            .AppendLine("<div class=\"govuk-summary-list__row\">")
+            .AppendLine("<dt class=\"govuk-summary-list__key\">" + key + "</dt>")
+            .AppendLine("<dd class=\"govuk-summary-list__value\">" + value + "</dd>")
+            .AppendLine("<dd class=\"govuk-summary-list__actions\">")
+            .AppendLine($"<a href=\"{Url.Action("Node", "Form", new { nodeId, returnToSummary = true })}\" class=\"govuk-link govuk-link--no-visited-state\">")
+            .AppendLine("Change <span class=\"govuk-visually-hidden\">" + key + "</span>")
+            .AppendLine("</a>")
+            .AppendLine("</div>")
+            .ToString();
+    }
+}
+
+<div>
+    @if (!string.IsNullOrEmpty(Model.Page.Header))
+    {
+        <h1 class="govuk-heading-xl">@Model.Page.Header</h1>
+    }
+    @if (!string.IsNullOrEmpty(Model.Page.SummaryTableHeader))
+    {
+        <h2 class="govuk-heading-m">@Model.Page.SummaryTableHeader</h2>
+    }
+    @foreach (var grouping in Model.TaskGroupings)
+    {
+        if (!grouping.Items.Any()) { continue;}
+        <h3 class="govuk-heading-m">@grouping.Name</h3>
+        <div class="govuk-summary-list">
+            @foreach (var item in grouping.Items)
+            {
+                if (item is TaskDisplayItem displayItem)
+                {
+                    @Html.Raw(RenderSummaryRow(displayItem.QuestionText ?? displayItem.Header, !string.IsNullOrEmpty(displayItem.Question?.Answer?.AnswerAsString) ? displayItem.Question.Answer.AnswerAsString : "None provided", displayItem.NodeId))
+                }
+            }
+        </div>
+    }
+
+    <br/>
+
+    @using (Html.BeginForm("Node", "Form", new {nodeId = Model.NextNodeId}, FormMethod.Get))
+    {
+        await Html.RenderPartialAsync("FormComponents/_Button", new Button {Text = "Continue", Variant = ButtonVariants.Primary});
+    }
+</div>

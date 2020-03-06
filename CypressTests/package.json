@@ -1,0 +1,33 @@
+{
+  "name": "govuk-veterans-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "@cypress/webpack-preprocessor": "^4.1.1",
+    "@types/cypress-image-snapshot": "^3.1.2",
+    "cypress": "^3.8.1",
+    "cypress-image-snapshot": "^3.1.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5"
+  },
+  "scripts": {
+    "browser": "cypress open",
+    "terminal": "cypress run",
+    "spec": "yarn terminal --spec cypress/integration$SPEC"
+  },
+  "@scripts/usage": {
+    "browser": [
+      "run cypress tests in browser",
+      "yarn browser"
+    ],
+    "terminal": [
+      "run cypress tests in terminal",
+      "yarn terminal"
+    ],
+    "spec": [
+      "run a specific test from the terminal",
+      "SPEC=/Forms/Generic/TextInput/RegularTextInput.js yarn spec"
+    ]
+  }
+}

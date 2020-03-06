@@ -1,0 +1,19 @@
+@using Forms.Core.Models.InFlight
+@model Forms.Core.Models.Questions.HiddenQuestion
+
+<div class="govuk-form-group">
+    <div class="govuk-body">
+        @Html.Raw(Model.BodyText)
+        <input
+            value="@AnswerType.Hidden"
+            id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+            name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+            type="hidden"/>
+
+        <input
+            value=""
+            id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[default]")"
+            name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[default]")"
+            type="hidden"/>
+    </div>
+</div>

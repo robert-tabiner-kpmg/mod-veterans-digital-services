@@ -1,0 +1,82 @@
+@using Common.Constants
+@using Forms.Core.Models.InFlight
+@using Forms.Core.Models.Questions
+@using Forms.Web.Models.FormComponents
+@using Forms.Web.Models.FormComponents.Enums
+@model Forms.Core.NodeHandlers.PhysicalNodeHandlers.Models.TaskItem.TaskPageResponse;
+
+@{ 
+     var currentQuestionIndex = 0;
+     var returnToSummary = ViewData[FormConstants.TempDataReturnToSummary].ToString();
+} 
+ 
+<div>
+    @if (Model.TaskQuestionPage.IncludeQuestionNumber)
+    {
+        <span class="govuk-caption-xl">Question @Model.QuestionNumber of @Model.QuestionCount</span>
+    }
+    <h1 class="govuk-heading-xl">@Model.TaskQuestionPage.Header</h1>
+    @if (!string.IsNullOrEmpty(Model.TaskQuestionPage.WarningText))
+    {
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-warning-text__assistive">Warning</span>
+                @Model.TaskQuestionPage.WarningText
+            </strong>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.TaskQuestionPage.IntroText))
+    {
+        <div class="govuk-body">
+            @Html.Raw(Model.TaskQuestionPage.IntroText)
+        </div>
+    }
+
+    @using (Html.BeginForm("Save", "Form", new {currentNodeId = Model.NodeId}, FormMethod.Post))
+    {
+        var inFlightAnswers = ViewData[FormConstants.TempDataAnswers] as IDictionary<string, Answer> ?? Model.Answers;
+        var inFlightErrors = ViewData[FormConstants.TempDataErrors] as IDictionary<string, string> ?? new Dictionary<string, string>();
+
+        foreach (var question in Model.TaskQuestionPage.Questions)
+        {
+            inFlightAnswers.TryGetValue(question.Id, out var answer);
+            inFlightErrors.TryGetValue(question.Id, out var error);
+
+            var additionalViewData = new {currentQuestionIndex, answer, error};
+
+            <div class="form-question">
+                <input type="hidden" value="@Model.NodeId" name="@nameof(InFlightPage.NodeId)" id="@nameof(InFlightPage.NodeId)"/>
+                <input type="hidden" value="@returnToSummary" name="@nameof(InFlightPage.ReturnToSummary)" id="@nameof(InFlightPage.ReturnToSummary)"/>
+                <input type="hidden" value="@question.Id" name="@($"Questions[{currentQuestionIndex}].Id")" id="@($"Questions[{currentQuestionIndex}].Id")"/>
+
+                @switch (question)
+                {
+                    case TextInputQuestion textInputQuestion:
+                        @Html.EditorFor(x => textInputQuestion, additionalViewData)
+                        break;
+                    case TextareaQuestion textareaQuestion:
+                        @Html.EditorFor(x => textareaQuestion, additionalViewData)
+                        break;
+                    case RadioQuestion radioQuestion:
+                        @Html.EditorFor(x => radioQuestion, additionalViewData)
+                        break;
+                    case DateInputQuestion dateInputQuestion:
+                        @Html.EditorFor(x => dateInputQuestion, additionalViewData)
+                        break;
+                    case CheckboxQuestion checkboxQuestion:
+                        @Html.EditorFor(x => checkboxQuestion, additionalViewData)
+                        break;
+                    case HiddenQuestion hiddenQuestion:
+                        @Html.EditorFor(x => hiddenQuestion, additionalViewData)
+                        break;
+                }
+
+            </div>
+            currentQuestionIndex++;
+        }
+
+        await Html.RenderPartialAsync("FormComponents/_Button", new Button {Text = "Continue", Variant = ButtonVariants.Primary});
+    }
+</div> 

@@ -1,0 +1,15 @@
+@model Forms.Core.NodeHandlers.PhysicalNodeHandlers.Models.PreTask.PreTaskResponse;
+
+<div>
+    @if (!string.IsNullOrEmpty(Model.PreTaskPage.Header))
+    {
+        <h1 class="govuk-heading-xl">@Model.PreTaskPage.Header</h1>
+    }
+    @if (!string.IsNullOrEmpty(Model.PreTaskPage.Body))
+    {
+        <div class="govuk-body"> @Html.Raw(Model.PreTaskPage.Body)</div>
+    }
+    <br />
+    @Html.ActionLink(@Model.PreTaskPage.BeginLinkText, "Node", "Form", new { nodeId = Model.NextNodeId }, new {@class = "govuk-link govuk-link--no-visited-state", @id="go-to-section"})
+</div>
+

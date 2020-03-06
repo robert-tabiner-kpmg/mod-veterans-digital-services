@@ -1,0 +1,18 @@
+﻿@model Forms.Core.SubmissionHandlers.Models.SubmissionResponse;
+
+@{
+    ViewData["Title"] = "Confirmation";
+}
+
+<div class="govuk-panel govuk-panel--confirmation">
+    <h1 class="govuk-panel__title">
+        Claim form submitted
+    </h1>
+    <div class="govuk-panel__body">
+        Your reference number<br><strong>@Model.Reference</strong>
+    </div>
+</div>
+<p class="govuk-body">We have sent you a confirmation email.</p>
+<h2 class="govuk-heading-m">What happens next?</h2>
+<p class="govuk-body">Your claim form has been received by Veterans UK.</p>
+<p class="govuk-body">We will be in contact soon, ether to confirm the outcome of your claim or to ask for more information if appropriate.</p>

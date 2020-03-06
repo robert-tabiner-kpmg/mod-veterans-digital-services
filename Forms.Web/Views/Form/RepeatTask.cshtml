@@ -1,0 +1,49 @@
+@model Forms.Core.NodeHandlers.PhysicalNodeHandlers.Models.PostTask.RepeatTaskResponse;
+
+<div>
+    <h1 class="govuk-heading-xl">@Model.Page.Header</h1>
+    <p class="govuk-body-m">@Model.Page.Body</p>
+    <h2 class="govuk-heading-m">@Model.Page.SummaryTableHeader</h2>
+    <dl class="govuk-summary-list">
+        <br />
+        @for(int i=0; i<Model.TaskItemNodeIds.Count(); i++)
+        {
+            <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                @Model.Page.SummaryTableText - @(i+1)
+            </dt>
+            <dd class="govuk-summary-list__value"></dd>
+            
+                <dd class="govuk-summary-list__actions">
+                    @Html.ActionLink(
+                        "Change", 
+                        "Node", 
+                        "Form", 
+                        new { nodeId = Model.TaskItemSummaryNodeIds.ToList()[i]},
+                        new { @class = "govuk-link govuk-link--no-visited-state"})
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                    @using (Html.BeginForm("DeleteTask", "Form", FormMethod.Post))
+                    {
+                        <input type="hidden" value="@Model.TaskRouterNodeId" name="taskNodeId" id="taskNodeId" />
+                        <input type="hidden" value="@Model.TaskItemNodeIds.ToList()[i]" name="taskItemNodeId" id="taskItemNodeId" />
+                        <button class="invisible-button">
+                            <a class="govuk-link govuk-link--no-visited-state hyperlink-override" href="#">Delete</a>
+                        </button>
+                    }
+                </dd>
+        </div>
+        }
+    </dl>
+    @using (Html.BeginForm("RepeatTask", "Form", FormMethod.Post))
+            {
+                <input type="hidden" value="@Model.TaskId" name="taskId" id="taskId" />
+                <button class="invisible-button">
+                <a class="govuk-link govuk-link--no-visited-state hyperlink-override" href="#">@Model.Page.RepeatLinkText</a>
+                </button>
+            }
+    <br />
+    
+    @Html.ActionLink("Continue", "Node", "Form", new { nodeId = Model.NextNodeId }, new {@class = "govuk-link govuk-link--no-visited-state"})
+</div>
+

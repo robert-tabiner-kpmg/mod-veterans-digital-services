@@ -1,0 +1,36 @@
+@model Forms.Core.NodeHandlers.PhysicalNodeHandlers.Models.TaskListResponse;
+@{
+  var taskIteration = 0;
+}
+
+<h1 class="govuk-heading-xl">
+    @Model.FormName
+</h1>
+
+<ol class="app-task-list">
+  <li>
+    @foreach(var taskGroupName in Model.TaskGroupNames)
+    {
+      var tasks = Model.Tasks.Where(x => x.GroupNameIndex == taskIteration).Where(x => !x.IsHidden).ToList();
+      if (!tasks.Any()) { continue; }
+      
+      <h2 class="app-task-list__section">
+        <span class="app-task-list__section-number">@(taskIteration + 1).</span> @taskGroupName
+      </h2>
+      <ul class="app-task-list__items">
+        @foreach (var task in tasks)
+        {
+          <li class="app-task-list__item">
+            <span class="app-task-list__task-name">
+              @Html.ActionLink(task.Name, "Node", "Form", new { nodeId = task.TaskRouterNodeKey }, new {@class = "govuk-link govuk-link--no-visited-state", @id="go-to-section"})</span>
+            @if (task.IsComplete)
+            {
+              <strong class="govuk-tag app-task-list__task-completed" id="eligibility-completed">Completed</strong>
+            }
+          </li>
+        }
+      </ul>
+      taskIteration++;
+    }
+  </li>
+</ol>

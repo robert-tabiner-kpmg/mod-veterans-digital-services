@@ -1,0 +1,45 @@
+@using Forms.Web.Models.FormComponents
+
+@{
+    var hasLabel = !string.IsNullOrEmpty(Model.Label);
+    var hasError = !string.IsNullOrEmpty(Model.Error);
+    var hasHint = !string.IsNullOrEmpty(Model.Hint);
+
+    var formGroupClassName = $"govuk-form-group {(hasError ? "govuk-form-group--error" : string.Empty)}";
+}
+
+<div class="@formGroupClassName">
+    @if (hasLabel)
+    {
+        await Html.RenderPartialAsync("FormComponents/_Label", new Label {Text = Model.Label, HtmlFor = Model.Id});
+    }
+    @if (hasHint)
+    {
+        await Html.RenderPartialAsync("FormComponents/_Hint", new Hint {Id = $"{Model.Id}-error", Text = Model.Hint});
+    }
+    @if (hasError)
+    {
+        await Html.RenderPartialAsync("FormComponents/_ErrorMessage", new ErrorMessage {Id = $"{Model.Id}-error", Error = Model.Error});
+    }
+    
+    <div class="govuk-checkboxes">
+    @{
+        foreach (var value in Model.Values)
+        {
+            <div class="govuk-checkboxes__item">
+                <input
+                    class="govuk-checkboxes__input"
+                    id="@($"{Model.Id}-{value}")"
+                    name="@Model.Id"
+                    type="checkbox"
+                    value="@value"
+                />
+                <Label class="govuk-checkboxes__label" htmlFor="@($"{Model.Id}-{value}")">
+                    @value
+                </Label>
+            </div>
+        }
+    }
+    </div> 
+</div>                 
+

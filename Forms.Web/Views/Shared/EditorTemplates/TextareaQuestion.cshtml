@@ -1,0 +1,43 @@
+@using Common.Constants
+@using Forms.Core.Models.InFlight
+@using Forms.Web.Models.FormComponents
+@model Forms.Core.Models.Questions.TextareaQuestion
+
+@{
+    var hasLabel = !string.IsNullOrEmpty(Model.Label);
+    var error = ViewData["error"] as string;
+    var hasError = !string.IsNullOrEmpty(error);
+    var hasHint = !string.IsNullOrEmpty(Model.Hint);
+    var formGroupClassName = $"govuk-form-group {(hasError ? "govuk-form-group--error" : string.Empty)}";
+    var inputClassName = $"govuk-textarea {(hasError ? "govuk-textarea--error" : string.Empty)}";
+    var answer = ViewData["answer"] as Answer;
+}
+
+<div class="@formGroupClassName">
+    @if (hasLabel)
+    {
+        await Html.RenderPartialAsync("FormComponents/_Label", new Label {Text = Model.Label, HtmlFor = Model.Id});
+    }
+    @if (hasHint)
+    {
+        await Html.RenderPartialAsync("FormComponents/_Hint", new Hint {Id = $"{Model.Id}-error", Text = Model.Hint});
+    }
+    @if (hasError)
+    {
+        await Html.RenderPartialAsync("FormComponents/_ErrorMessage", new ErrorMessage {Id = $"{Model.Id}-error", Error = error});
+    }
+    
+    <input
+        value="@AnswerType.Text"
+        id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+        name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+        type="hidden"/>
+    
+    <textarea
+        value="@(answer?.Values["default"])"
+        id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[default]")"
+        name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[default]")"
+        class="@inputClassName"
+        rows=@Model.Rows>
+    </textarea>
+</div>

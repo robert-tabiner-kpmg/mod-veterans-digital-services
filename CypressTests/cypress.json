@@ -1,0 +1,7 @@
+{
+  "video": false,
+  "env": {
+    "baseUrl": "https://localhost:5001"
+  },
+  "ignoreTestFiles": ["**/When*.js", "*.hot-update.js"]
+}

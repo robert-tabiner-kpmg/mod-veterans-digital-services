@@ -1,0 +1,14 @@
+﻿@model Forms.Core.Models.Pages.ContentPage
+@await Html.PartialAsync("FormComponents/_Header", Model.Header)
+@using Forms.Web.Models.FormComponents
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <div class="govuk-body">
+        @Html.Raw(Model.BodyText)
+    </div>
+    <br/>
+    @await Html.PartialAsync("FormComponents/_StartButton", new StartButton { Id = "start-form", Url = @Url.Action("SkipAuthentication", "Home") })
+</div>

@@ -1,0 +1,61 @@
+@using Common.Constants
+@using Forms.Core.Models.InFlight
+@using Forms.Web.Models.FormComponents
+@model Forms.Core.Models.Questions.RadioQuestion
+
+@{
+  var hasHeading = !string.IsNullOrEmpty(@Model.Label);
+  var hasHint = !string.IsNullOrEmpty(@Model.Hint);
+  var error = ViewData["error"] as string;
+  var answer = ViewData["answer"] as Answer;
+  var hasError = !string.IsNullOrEmpty(error);
+  var inlineClass = $"govuk-radios {(@Model.Inline ? "govuk-radios--inline" : string.Empty)}";
+  var formGroupClassName = $"govuk-form-group {(hasError ? "govuk-form-group--error" : string.Empty)}";
+  var describedByName = $"{(hasHint ? $"{Model.Id}-hint" : string.Empty)} {(hasError ? $"{Model.Id}-error" : string.Empty)}";
+}
+
+<div class="@formGroupClassName" aria-describedby="@describedByName">
+  <fieldset class="govuk-fieldset">
+    @if (hasHeading)
+    {
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        <h1 class="govuk-fieldset__heading">
+          @Model.Label
+        </h1>
+      </legend>
+    }
+    @if (hasHint)
+    {
+      await Html.RenderPartialAsync("FormComponents/_Hint", new Hint {Id = $"{Model.Id}-hint", Text = Model.Hint});
+    }
+    @if (hasError)
+    {
+        await Html.RenderPartialAsync("FormComponents/_ErrorMessage", new ErrorMessage {Id = $"{Model.Id}-error", Error = error});
+    }
+    
+    <input
+      value="@AnswerType.Radio"
+      id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+      name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.AnswerType")"
+      type="hidden"/>
+    
+    <div class= "@inlineClass">
+      @foreach(var option in @Model.Options)
+      {
+        <div class="govuk-radios__item">
+          <input
+            class="govuk-radios__input"
+            id="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[default]")"
+            name="@($"Questions[{ViewData["currentQuestionIndex"]}].Answer.Values[default]")"
+            type="radio"
+            value="@option"
+            checked="@(answer?.AnswerAsString == option)"
+            >
+          <label class="govuk-label govuk-radios__label" for="@Model.Id">
+            @option
+          </label>
+        </div>
+      }
+    </div>
+  </fieldset>
+</div>

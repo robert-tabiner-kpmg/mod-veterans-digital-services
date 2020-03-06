@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\Forms.Core\Forms.Core.csproj" />
+      <ProjectReference Include="..\Forms.Infrastructure\Forms.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="3.1.1" />
+    </ItemGroup>
+
+</Project>

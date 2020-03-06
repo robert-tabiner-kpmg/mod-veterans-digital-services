@@ -1,0 +1,15 @@
+@model Forms.Core.Models.Pages.ContentPage;
+@using Common.Constants
+
+@{
+    ViewData["Title"] = "Terms and Conditions";
+    ViewData[FormConstants.ViewDataIsFullWidth] = "true";
+}
+
+<div>
+    <h1 class="govuk-heading-xl">Terms and Conditions</h1>
+    <h3 class="govuk-heading-m">@Model.Header</h3>
+    <div class="govuk-body">
+        @Html.Raw(Model.BodyText)
+    </div>
+</div>
