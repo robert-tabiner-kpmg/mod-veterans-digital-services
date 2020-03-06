@@ -8,7 +8,7 @@ A detailed overview of this project can be found here: https://github.com/mod-ve
 Docker
 
 Govuk notify - https://www.notifications.service.gov.uk/
-This app user govuk notify in order to send email communications. To get access to our notify instance, speak to the MOD Digitial forms service manager.
+This app uses govuk notify in order to send email communications. To get access to our notify instance, speak to the MOD Digitial forms service manager.
 
 ### Configuration
 
