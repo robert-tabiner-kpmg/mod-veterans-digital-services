@@ -33,15 +33,18 @@ namespace Graph.Models
         public void AddDirectedEdge(GraphNode<TKey, TValue> from, GraphNode<TKey, TValue> to, int cost = 1)
         {
             from.Neighbors.Add(to);
+            from.NeighborIds.Add(to.Key);
             from.Costs.Add(cost);
         }
 
         public void AddUndirectedEdge(GraphNode<TKey, TValue> from, GraphNode<TKey, TValue> to, int cost = 1)
         {
             from.Neighbors.Add(to);
+            from.NeighborIds.Add(to.Key);
             from.Costs.Add(cost);
 
             to.Neighbors.Add(from);
+            to.NeighborIds.Add(from.Key);
             to.Costs.Add(cost);
         }
 
@@ -49,6 +52,7 @@ namespace Graph.Models
         {
             from.Costs.RemoveAt(from.Neighbors.IndexOf(to));
             from.Neighbors.Remove(to);
+            from.NeighborIds.Remove(to.Key);
         }
 
         public bool Contains(TValue value)

@@ -34,6 +34,15 @@ namespace Forms.Core.Repositories
 
             form = await _cacheFramework.Get<Graph<Key, FormNode>>(formKey);
             
+            // Build the neighbors collection
+            foreach (var node in form.Nodes)
+            {
+                foreach (var neighborId in node.NeighborIds)
+                {
+                    node.Neighbors.Add(form.Nodes.FindByKey(neighborId));
+                }
+            }
+            
             // Save the graph in case it is requested later in the http request
             _forms.Add(formKey, form);
 
