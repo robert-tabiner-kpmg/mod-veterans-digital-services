@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
 namespace Graph.Models
 {
     public class Node<TKey, TValue>
@@ -14,6 +17,9 @@ namespace Graph.Models
         public TValue Value { get; set; }
         public TKey Key { get; set; }
 
+        [JsonIgnore]
         public NodeList<TKey, TValue> Neighbors { get; set; }
+        
+        public List<TKey> NeighborIds { get; set; } = new List<TKey>();
     }
 }
