@@ -10,10 +10,11 @@ namespace Forms.Infrastructure.Email
     public class NotifyEmailFramework : IEmailFramework
     {
         private readonly IAsyncNotificationClient _notificationClient;
-        public NotifyEmailFramework(IOptions<EmailFrameworkOptions> options)
-        {
-            _notificationClient = new NotificationClient(options.Value.ApiKey);
-        }
+        //Need to uncomment later
+       // public NotifyEmailFramework(IOptions<EmailFrameworkOptions> options)
+       // {
+       //     _notificationClient = new NotificationClient(options.Value.ApiKey);
+       // }
         
         public async Task SendEmail(string emailAddress, string templateId, Dictionary<string, dynamic> personalisation)
         {
