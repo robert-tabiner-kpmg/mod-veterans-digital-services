@@ -38,7 +38,7 @@ namespace Forms.Core.Forms.Afcs
                 new TaskQuestionPage
                 {
                     Id = "claim-illness",
-                    Header = "What is the condition, injury or illness you are claiming for?",
+                    Header = "What type of medical condition, injury or illness you are claiming for?",
                     NextPageId = "claim-accident-date", 
                     Questions = new List<BaseQuestion>
                     {
@@ -60,10 +60,32 @@ namespace Forms.Core.Forms.Afcs
                             x.First().Answer.Values["default"] ==
                             "A condition, injury or illness that is the result of a specific accident or incident"
                                 ? "claim-accident-date"
-                                : "claim-time-date")
+                                //: "claim-time-date")
+                                : "claim-illness-condition")
                     }
 
                 },
+                //new question added
+                new TaskQuestionPage
+                {
+                    Id = "claim-illness-condition",
+                    Header = "What medical condition are you claiming for?",
+                    NextPageId = "claim-accident-location",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextInputQuestion
+                        {
+                            Id = "question1",
+                            //Hint = "Please provide your rank at the time",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = false,
+                                MaxLength = 30
+                            })
+                        }
+                    }
+                },
+
                 new TaskQuestionPage
                 {
                     Id = "claim-accident-date",
