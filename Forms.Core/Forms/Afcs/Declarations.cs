@@ -17,7 +17,8 @@ namespace Forms.Core.Forms.Afcs
             Id = "declarations-task",
             HiddenWhen = (tasks) =>
             {
-                return tasks.Any(x => x.taskId != "declarations-task" && !x.isTaskComplete);
+                return false; 
+                // return tasks.Any(x => x.taskId != "declarations-task" && !x.isTaskComplete);
             },
             SummaryPage = new SummaryPage(),
             Name = "Declaration and submission",
