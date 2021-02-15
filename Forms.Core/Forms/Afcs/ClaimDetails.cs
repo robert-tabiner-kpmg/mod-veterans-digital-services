@@ -65,7 +65,7 @@ namespace Forms.Core.Forms.Afcs
                     }
 
                 },
-                //new question added as per reuqirment
+                //new question added as per reuqirment document
                 new TaskQuestionPage
                 {
                     Id = "claim-illness-condition",
