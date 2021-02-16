@@ -20,7 +20,7 @@ echo "============== SET CF Environment Variables =============="
 
 echo "============== PUSHING CF APP =============="
 # bash ci/zdt.sh
-bash CF_DOCKER_PASSWORD=$DOCKER_PASSWORD cf push blue --docker-image modveterans/forms:dev --docker-username $DOCKER_USERNAME -u port
+ CF_DOCKER_PASSWORD=$DOCKER_PASSWORD cf push blue --docker-image modveterans/forms:dev --docker-username $DOCKER_USERNAME -u port
 
 echo "============== BINDING REDIS AND S3 =============="
 ./cf create-service redis tiny-3.2 $REDIS_SERVICE_NAME
