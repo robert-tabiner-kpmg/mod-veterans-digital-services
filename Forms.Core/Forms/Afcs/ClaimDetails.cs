@@ -65,12 +65,14 @@ namespace Forms.Core.Forms.Afcs
                     }
 
                 },
-                //new question added as per reuqirment document
+                //new question added as per reuqirment document version 0.2
+
                 new TaskQuestionPage
                 {
                     Id = "claim-illness-condition",
                     Header = "What medical condition are you claiming for?",
-                    NextPageId = "claim-accident-location",
+                    //NextPageId = "claim-accident-journey-reason",//"claim-accident-location",
+                   NextPageId = "claim-illness-surgery-address",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -79,12 +81,55 @@ namespace Forms.Core.Forms.Afcs
                             //Hint = "Please provide your rank at the time",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
-                                IsRequired = false,
+                                IsRequired = true,
                                 MaxLength = 30
                             })
                         }
                     }
                 },
+
+                   new TaskQuestionPage
+                        {
+                            Id = "claim-illness-surgery-address",
+                            NextPageId = "claim-accident-date",//"claim-other-treatment",
+                            Header = "What is the name and address of the hospital where this is due to take place?",
+                            Questions = new List<BaseQuestion>
+                            {
+                                new TextInputQuestion
+                                {
+                                    Label = "Address",
+                                    Hint = "Building and street",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question3",
+                                    Hint = "Town or city",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
+                                    Hint = "County",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question5",
+                                    Hint = "Postcode",
+                                    Type = "Text",
+                                    Width = 12
+                                }
+                            }
+                        },
 
                 new TaskQuestionPage
                 {
