@@ -20,7 +20,7 @@ echo "============== SET CF Environment Variables =============="
 ./cf set-env blue Redis__Uri $REDIS_URL
 
 echo "============== PUSHING CF APP =============="
-./zdt
+./zdt.sh
 
 echo "============== BINDING REDIS AND S3 =============="
 ./cf create-service redis tiny-3.2 $REDIS_SERVICE_NAME
