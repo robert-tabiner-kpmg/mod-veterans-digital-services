@@ -92,42 +92,69 @@ namespace Forms.Core.Forms.Afcs
                         {
                             Id = "claim-illness-surgery-address",
                             NextPageId = "claim-accident-date",//"claim-other-treatment",
-                            Header = "What is the name and address of the hospital where this is due to take place?",
+                            Header = "Which Medical Practioner gave you the diagnosis (if known)?",
                             Questions = new List<BaseQuestion>
                             {
                                 new TextInputQuestion
                                 {
-                                    Label = "Address",
-                                    Hint = "Building and street",
+                                    Label = "Name",
                                     Id = "question1",
                                     Type = "Text"
                                 },
+
                                 new TextInputQuestion
                                 {
+                                    Label = "Address",
+                                    Hint = "Building and street",
                                     Id = "question2",
                                     Type = "Text"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question3",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
                                     Hint = "Town or city",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
-                                    Id = "question4",
+                                    Id = "question5",
                                     Hint = "County",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
-                                    Id = "question5",
+                                    Id = "question6",
                                     Hint = "Postcode",
                                     Type = "Text",
                                     Width = 12
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Id = "question7",
+                                    Label = "Telephone number"
+                                },
+
+                                new TextInputQuestion()
+                                {
+                                    Id = "question8",
+                                    Label = "Email",
+                                    Type = "email",
+                                    Autocomplete = "email",
+                                    Width = 50,
+                                    Validator = new EmailValidation(new EmailValidationProperties()
+                                        {
+                                            IsRequired = false
+                                        })
                                 }
+
                             }
                         },
 
