@@ -7,7 +7,6 @@ echo "============== INSTALLING CLOUD FOUNDRY CLI CLIENT =============="
 wget --max-redirect=1 --output-document=cf_cli.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github"
 gunzip cf_cli.tgz
 tar -xvf cf_cli.tar
-ls
 
 echo "============== LOGGING INTO CLOUD FOUNDRY =============="
 ./cf login -a $CF_API -s $CF_SPACE -o $CF_ORGANIZATION -u $CF_USERNAME -p $CF_PASSWORD
@@ -20,7 +19,7 @@ echo "============== SET CF Environment Variables =============="
 ./cf set-env blue Redis__Uri $REDIS_URL
 
 echo "============== PUSHING CF APP =============="
-./ci/zdt.sh
+bash ci/zdt.sh
 
 echo "============== BINDING REDIS AND S3 =============="
 ./cf create-service redis tiny-3.2 $REDIS_SERVICE_NAME
