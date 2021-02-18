@@ -17,7 +17,7 @@ echo "============== LOGGING INTO CLOUD FOUNDRY =============="
 echo "============== PUSHING CF APP =============="
 # bash ci/zdt.sh
 # export CF_DOCKER_PASSWORD=$DOCKER_PASSWORD
-./cf push green --docker-image modveterans/forms:dev --docker-username $DOCKER_USERNAME
+./cf push green --docker-image modveterans/forms:dev --docker-username codesuretoby
 
 echo "============== SET CF Environment Variables =============="
 ./cf set-env green Email__ApiKey $NOTIFY_API
@@ -27,7 +27,7 @@ echo "============== SET CF Environment Variables =============="
 ./cf set-env green Redis__Uri $REDIS_URL
 
 echo "============== BINDING REDIS AND S3 =============="
-./cf create-service redis tiny-3.2 $REDIS_SERVICE_NAME
-./cf create-service aws-s3-bucket tiny-3.2 $S3_SERVICE_NAME
-./cf bind-service $APP_NAME $REDIS_SERVICE_NAME
-./cf bind-service $APP_NAME $S3_SERVICE_NAME
+# ./cf create-service redis tiny-3.2 $REDIS_SERVICE_NAME
+# ./cf create-service aws-s3-bucket tiny-3.2 $S3_SERVICE_NAME
+# ./cf bind-service $APP_NAME $REDIS_SERVICE_NAME
+# ./cf bind-service $APP_NAME $S3_SERVICE_NAME
