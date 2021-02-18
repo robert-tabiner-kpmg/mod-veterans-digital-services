@@ -5,7 +5,8 @@ echo "============== INSTALLING CLOUD FOUNDRY CLI CLIENT =============="
 # https://github.com/cloudfoundry/cli/releases
 # wget --max-redirect=1 --output-document=cf_cli_6.26.0.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&version=7.1.0&source=github-rel"
 # wget --max-redirect=1 --output-document=cf_cli.tgz "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github"
-wget --output-document=cf_cli.tgz https://packages.cloudfoundry.org/stable?release=linux64-binary&version=7.2.0&source=github-rel
+# wget --output-document=cf_cli.tgz https://packages.cloudfoundry.org/stable?release=linux64-binary&version=7.2.0&source=github-rel
+mv ci/cf_cli.tgz .
 gunzip cf_cli.tgz
 tar -xvf cf_cli.tar
 
