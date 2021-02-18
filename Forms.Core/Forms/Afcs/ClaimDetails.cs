@@ -162,13 +162,94 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-accident-date",
                     Header = "What was the date of the incident/accident?",
-                    NextPageId = "claim-accident-location",
+                    NextPageId = "claim-illness-condition-related",
                     Questions = new List<BaseQuestion>
                     {
                         new DateInputQuestion
                         {
                             Id = "question1",
                             Hint = "For example 27 3 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+
+                  new TaskQuestionPage
+                {
+                    Id = "claim-illness-condition-related",
+                    Header = "Is your Illness/Condition related to:",
+                    NextPageId = "claim-illness-condition-dueto",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new CheckboxQuestion
+                        {
+                            Id = "question1",
+                            Label = "Select all that apply",
+                            Options = new List<string>
+                            {
+                                "Duties - Operations overseas",
+                                "Duties - Operations UK",
+                                "Trade",
+                                "Training",
+                                "Misconduct by others",
+                                "Consequential to another medical condition"
+                            }
+                        }
+                    }
+                },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-illness-condition-dueto",
+                    Header = "Is your condition due to exposure to?:",
+                    NextPageId = "claim-condition-start-date",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new CheckboxQuestion
+                        {
+                            Id = "question1",
+                            Label = "Select all that apply",
+                            Options = new List<string>
+                            {
+                                "Cold",
+                                "Heat",
+                                "Noise",
+                                "Vibration",
+                                "Chemical exposure If Y What substance",
+                                "Date you were first exposed to these:",
+                                "Length of exposure"
+                            }
+                        }
+                    }
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-condition-start-date",
+                    Header = "When did your condition start?",
+                    NextPageId = "claim-first-medical-attention-date",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Hint = "If unknown give approx date. For example, 27 03 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-first-medical-attention-date",
+                    Header = "When did you first seek medical attention for the condition(s)?",
+                    NextPageId = "claim-time-due-to",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Hint = "If unknown give approx date. For example, 27 03 2007",
                             Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
                         }
                     }
