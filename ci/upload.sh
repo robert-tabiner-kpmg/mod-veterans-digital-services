@@ -11,6 +11,7 @@ echo "============= LOGGING INTO CLOUD FOUNDRY ========================"
 
 echo "============= PUSHING CF APP ===================================="
 ./cf push $CF_APP_NAME --docker-image modveterans/forms:$CF_SPACE --docker-username $CF_DOCKER_USERNAME
+cf push sandbox --docker-image modveterans/forms:dev --docker-username codesuretoby
 
 echo "============= SET CF Environment Variables ======================"
 ./cf set-env $CF_APP_NAME Email__ApiKey $NOTIFY_API

@@ -37,6 +37,12 @@ jobs:
           script: env DOCKER_TAG="$DOCKER_TAG" CF_SPACE=dev CF_APP_NAME=blue CF_MANIFEST=ci/manifest-development.yml ci/upload.sh
           on:
             branch: development
+        - provider: script
+          skip_cleanup: true
+          manifest: manifest-sandbox.yml
+          script: env DOCKER_TAG="$DOCKER_TAG" CF_SPACE=dev CF_APP_NAME=blue CF_MANIFEST=ci/manifest-sandbox.yml ci/upload.sh
+          on:
+            branch: sandbox
         # - provider: script
         #   skip_cleanup: true
         #   manifest: manifest-qa.yml
