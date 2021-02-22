@@ -39,7 +39,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-illness",
                     Header = "What type of medical condition, injury or illness you are claiming for?",
-                    NextPageId = "claim-accident-date", 
+                    NextPageId = "claim-illness-condition", 
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
@@ -59,7 +59,7 @@ namespace Forms.Core.Forms.Afcs
                         new PathChangeEffect(x =>
                             x.First().Answer.Values["default"] ==
                             "A condition, injury or illness that is the result of a specific accident or incident"
-                                ? "claim-accident-date"
+                                ? "claim-accident-condition"
                                 //: "claim-time-date")
                                 : "claim-illness-condition")
                     }
@@ -92,7 +92,7 @@ namespace Forms.Core.Forms.Afcs
                    new TaskQuestionPage
                         {
                             Id = "claim-illness-surgery-address",
-                            NextPageId = "claim-accident-date",//"claim-other-treatment",
+                            NextPageId = "claim-illness-date",//"claim-other-treatment",
                             Header = "Which Medical Practioner gave you the diagnosis (if known)?",
                             Questions = new List<BaseQuestion>
                             {
@@ -161,7 +161,7 @@ namespace Forms.Core.Forms.Afcs
 
                 new TaskQuestionPage
                 {
-                    Id = "claim-accident-date",
+                    Id = "claim-illness-date",
                     Header = "What was the date your condition started?",
                     NextPageId = "claim-illness-condition-related",
                     Questions = new List<BaseQuestion>
@@ -340,6 +340,404 @@ namespace Forms.Core.Forms.Afcs
                         }
                     }
                 },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-condition",
+                    Header = "Was the Incident/Accident related to Sporting/Adventure Training/Physical Training?",
+                    NextPageId = "claim-accident-non-sporting-medical-condition",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Label = "Please select the option:",
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes",
+                                "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-medical-condition"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-medical-condition")
+                    }
+
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-medical-condition",
+                    NextPageId = "claim-accident-non-sporting-surgery-address",
+                    Header = "What medical condition(s) are you claiming for?  " + "<br>" +
+                        "Where you have any specific medical diagnosis, please include them here",
+                    WarningText = "",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Hint = "Please include all claimed medical conditions relating to the incident. " +
+                            "Tell us which side of the body is affected where needed (e.g. leftarm)",
+                            Rows = 5,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 250
+                            })
+                        }
+                    }
+                },
+
+                     new TaskQuestionPage
+                        {
+                            Id = "claim-accident-non-sporting-surgery-address",
+                            NextPageId = "claim-accident-non-sporting-date",//"claim-other-treatment",
+                            Header = "Which Medical Practioner gave you the diagnosis (if known)?",
+                            Questions = new List<BaseQuestion>
+                            {
+                                new TextInputQuestion
+                                {
+                                    Label = "Name",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Label = "Address",
+                                    Hint = "Building and street",
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question3",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
+                                    Hint = "Town or city",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question5",
+                                    Hint = "County",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question6",
+                                    Hint = "Postcode",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Id = "question7",
+                                    Label = "Telephone number"
+                                },
+
+                                new TextInputQuestion()
+                                {
+                                    Id = "question8",
+                                    Label = "Email",
+                                    Type = "email",
+                                    Autocomplete = "email",
+                                    Width = 50,
+                                    Validator = new EmailValidation(new EmailValidationProperties()
+                                        {
+                                            IsRequired = false
+                                        })
+                                }
+
+                            }
+                        },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-date",
+                    Header = "What was the date of injury/ incident?",
+                    NextPageId = "claim-accident-non-sporting-duty",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Hint = "For example 27 3 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-duty",
+                    Header = "Were you on duty at the time of incident?",
+                    NextPageId = "claim-accident-non-sporting-report-to",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-report-to"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-form")
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-report-to",
+                    Header = "Is your condition due to exposure to?:",
+                    NextPageId = "claim-accident-non-sporting-form",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new CheckboxQuestion
+                        {
+                            Id = "question1",
+                            Label = "Select all that apply",
+                            Options = new List<string>
+                            {
+                                "Unit medic",
+                                "Hospital",
+                                "Chain of command",
+                                "Colleague",
+                                "Other person"
+                            }
+                        }
+                    }
+                },
+
+                  new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-form",
+                    Header = "Was accident form completed?",
+                    NextPageId = "claim-accident-non-sporting-location",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-location"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-location")
+                    }
+                },
+
+                  new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-location",
+                    Header = "Where you were when the accident happened?",
+                    NextPageId = "claim-accident-non-sporting-activity",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations location overseas",
+                                "Operations location UK",
+                                "Home base",
+                                "Accomodation - Ops",
+                                "Accomodation - base",
+                                "An off-duty location"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+
+                },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-activity",
+                    Header = "Where were you doing at the time the incident occured?",
+                    NextPageId = "claim-accident-non-sporting-road-traffic",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations Duties overseas",
+                                "Operations Duties UK",
+                                "Home base duties",
+                                "Training Excercise",
+                                "Travelling"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-road-traffic",
+                    Header = "Was the incident a Road Traffic Accident?",
+                    NextPageId = "claim-accident-non-sporting-journey-reason",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-journey-reason"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-journey-reason")
+                    }
+                },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-journey-reason",
+                    Header = "Where were you doing at the time the incident occured?",
+                    NextPageId = "claim-accident-non-sporting-journey-from",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Duties - Operations",
+                                "Duties - Trade",
+                                "Duties - Training",
+                                "Personal (non-duty/off-duty)"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-journey-from",
+                    Header = "Where did your journey start?",
+                    NextPageId = "claim-accident-non-sporting-journey-to",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations location overseas",
+                                "Operations location - UK",
+                                "Accomodation - field",
+                                "Accomodation - base",
+                                "Home base",
+                                "Your home",
+                                "An off-duty location"
+
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-journey-to",
+                    Header = "Where were you travelling to?",
+                    NextPageId = "claim-accident-non-sporting-direct-route",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations location overseas",
+                                "Operations location - UK",
+                                "Accomodation - Operations",
+                                "Accomodation - base",
+                                "Home base",
+                                "Your home",
+                                "An off-duty location"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-direct-route",
+                    Header = "Were you on a direct route?",
+                    //NextPageId = "claim-accident-non-sporting-journey-reason",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-journey-reason"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-journey-reason")
+                    }
+                },
+
                 new TaskQuestionPage
                 {
                     Id = "claim-accident-location",
