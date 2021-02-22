@@ -27,7 +27,7 @@ jobs:
         - docker build -t build-image . -f web.Dockerfile
         - docker tag build-image:latest "$DOCKER_ORGANISATION"/forms:"$DOCKER_TAG"
         - docker push "$DOCKER_ORGANISATION"/forms:"$DOCKER_TAG"
-        - docker tag build-image:latest modveterans/forms:dev
+        - docker tag build-image:latest modveterans/forms:"$DOCKER_TAG"
         - docker push modveterans/forms:dev
 
       deploy:
