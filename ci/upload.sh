@@ -22,5 +22,5 @@ echo "============= SET CF Environment Variables ======================"
 echo "============= BINDING REDIS AND S3 =============================="
 #./cf create-service redis tiny-3.2 $REDIS_SERVICE_NAME
 #./cf create-service aws-s3-bucket tiny-3.2 $S3_SERVICE_NAME
-./cf bind-service $CF_APP_NAME $REDIS_SERVICE_NAME
-./cf bind-service $CF_APP_NAME $S3_SERVICE_NAME
+#./cf bind-service $CF_APP_NAME $REDIS_SERVICE_NAME
+#./cf bind-service $CF_APP_NAME $S3_SERVICE_NAME
