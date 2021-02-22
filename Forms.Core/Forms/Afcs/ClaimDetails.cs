@@ -71,6 +71,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-illness-condition",
                     Header = "What medical condition are you claiming for?",
+                    IntroText = "Where you have a specific medical diagnosis, please include this here",
                     //NextPageId = "claim-accident-journey-reason",//"claim-accident-location",
                    NextPageId = "claim-illness-surgery-address",
                     Questions = new List<BaseQuestion>
@@ -161,7 +162,7 @@ namespace Forms.Core.Forms.Afcs
                 new TaskQuestionPage
                 {
                     Id = "claim-accident-date",
-                    Header = "What was the date of the incident/accident?",
+                    Header = "What was the date your condition started?",
                     NextPageId = "claim-illness-condition-related",
                     Questions = new List<BaseQuestion>
                     {
@@ -239,11 +240,11 @@ namespace Forms.Core.Forms.Afcs
                     }
                 },
 
-                     new TaskQuestionPage
+                       new TaskQuestionPage
                 {
                     Id = "claim-first-medical-attention-date",
                     Header = "When did you first seek medical attention for the condition(s)?",
-                    NextPageId = "claim-time-due-to",
+                    NextPageId = "claim-illness-downgraded",
                     Questions = new List<BaseQuestion>
                     {
                         new DateInputQuestion
@@ -251,6 +252,91 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             Hint = "If unknown give approx date. For example, 27 03 2007",
                             Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+                    new TaskQuestionPage
+                {
+                    Id = "claim-illness-downgraded",
+                    NextPageId = "claim-illness-downgraded-dates",
+                    Header = "Were you downgraded for any of the conditions on this claim?",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] == "Yes"
+                                ? "claim-illness-downgraded-dates"
+                                : "claim-illness-note")
+                    }
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-illness-downgraded-dates",
+                    Header = "When were you downgraded?",
+                    NextPageId = "claim-illness-note",//"claim-accident-location",//
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Label = "Date from:",
+                            Hint = "For example, 27 03 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new DateInputQuestion
+                        {
+                            Id = "question2",
+                            Label = "Date to:",
+                            Hint = "For example, 27 03 2010",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-illness-note",
+                    Header = "User Notes",
+                    IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
+                        "Include information you think is relevant but do not include details of operations.  " +
+                        "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
+                        "please tell us why here.<br><br>" +
+
+                        "Note: You MUST NOT include information classified as Secret or above.  " +
+                        "If you need to tell us information classified as Secret or above, please write “Classified  Information” here and " +
+                        "we will contact you after we receive your claim.<br><br>"+
+
+                        "If you have served or are serving (whether directly or in a support role) with the United Kingdom Special Forces (UKSF),"+
+                        "you must seek advice from the MOD A Block Disclosure Cell BEFORE completing this section. " +
+                        "The Disclosure Cell can be contacted by emailing MAB-J1-Disclosures-ISA-Mailbox@mod.gov.uk .",
+
+                    //NextPageId = "claim-accident-journey-reason",//"claim-accident-location",
+                   NextPageId = "claim-accident-location",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Rows = 5,
+                            //Hint = "What were the chemical, biological or hazardous substances you were exposed to?",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 1500
+                            })
                         }
                     }
                 },
