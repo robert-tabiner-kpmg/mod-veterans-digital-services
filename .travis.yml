@@ -1,0 +1,60 @@
+﻿language: node_js
+node_js:
+  - 10
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
+services:
+  - docker
+env:
+  global:
+    - CF_API=api.london.cloud.service.gov.uk
+    - CF_ORGANIZATION=mod-veterans-digital-project
+    - CF_USERNAME=toby@codesure.co.uk
+    - CF_REDIS_URL=localhost
+    - CF_SPACE=dev
+    - secure: "Rlal6uRpsfYlp0xLuIpd4w5SGdiaUG5nQEW4AJf9LBb+Hnmkryp9iJ4t4g16/kbEmg54cv3b930ulRoLFlLx0ZggsE0kaMi8z01e4xHIZeGP3onSUlidnlFysgmpg/+6wOlIyfDKvfWIq8mZNCPdGGVc6k9D6bkDTS3E/B+ZZxAq8JkDnzQFpUwAnRzEsO/tKZ41J78Wc2SSHE5qCsQ8BF4nnGbBG2YtcaBZTJDt9noWqYuHpBvMZxmJNsgPphMS6n9sUrGUg8C/A3dOBR/J/j/yJz5n0uNlWOWyf/qzDPT+TUpW1CJP+6v4QVdwMdR8AyVWuEeRZVo+eJkxfL2bvRdu3NIzUGfGgfel70HZFrUjsONliy37L5beBhMuXI1hHyxU6g3NXwkA1zE4I03g+rudLGdrPFs1Vg2XL4kJsTsqvS5ylUEFcHt6q4KvYF5W73h6iRheGROL/HUYoTRNncnrsCK1vNkCCNClzzfFd3v5ck3RseLW3kTi1rZV1zN6UErAEdpyQctxb/hgRTootygqJlICy6g09YbNXj8pGqsiJxtFHaHI2tiEaVviqsf63aEGA7J1RyG9+p67sadDdymCooeHzD3GFndOfgKqOU8coXTLqcrDYe7T7+5hDP/Vho7jQORshSYvj5LtgNkPblsvQl2LTKCoA8dTAxLSlGE="
+
+jobs:
+  include:
+    - stage: Build Docker Image
+      # if: branch IN ("development", "uat")
+      if: branch IN ("development")
+      script:
+        - chmod 755 ci/upload.sh
+        - echo "$DOCKER_SECRET" | docker login -u "$DOCKER_USER" docker.io --password-stdin
+        - docker build -t build-image . -f web.Dockerfile
+        - docker tag build-image:latest "$DOCKER_ORGANISATION"/forms:"$DOCKER_TAG"
+        - docker push "$DOCKER_ORGANISATION"/forms:"$DOCKER_TAG"
+        - docker tag build-image:latest modveterans/forms:dev
+        - docker push modveterans/forms:dev
+
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          manifest: manifest-development.yml
+          script: env CF_SPACE=dev CF_APP_NAME=blue CF_MANIFEST=ci/manifest-development.yml ci/upload.sh
+          on:
+            branch: development
+        # - provider: script
+        #   skip_cleanup: true
+        #   manifest: manifest-qa.yml
+        #   script: env CF_SPACE=qa CF_APP_NAME=Blue CF_MANIFEST=ci/manifest-qa.yml ci/upload.sh
+        #   on:
+        #     branch: qa
+        # - provider: script
+        #   skip_cleanup: true
+        #   manifest: manifest-production.yml
+        #   script: env CF_SPACE=production CF_APP_NAME=Blue CF_MANIFEST=ci/manifest-production.yml ci/upload.sh
+        #   on:
+        #     branch: master
+
+notifications:
+  email:
+    recipients:
+      - toby@codesure.co.uk
+    #      - Kalpana.Mhaske100@mod.gov.uk
+    #    if: branch IN ("sandbox", "qa", "master")
+    on_success: always
+    on_failure: always
