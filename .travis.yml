@@ -19,16 +19,13 @@ env:
 jobs:
   include:
     - stage: Build Docker Image
-      # if: branch IN ("development", "uat")
-      if: branch IN ("development", "sandbox")
+      if: branch IN ("development", "sandbox", "uat", "master")
       script:
         - chmod 755 ci/upload.sh
         - echo "$DOCKER_SECRET" | docker login -u "$DOCKER_USER" docker.io --password-stdin
         - docker build -t build-image . -f web.Dockerfile
         - docker tag build-image:latest "$DOCKER_ORGANISATION"/forms:"$DOCKER_TAG"
         - docker push "$DOCKER_ORGANISATION"/forms:"$DOCKER_TAG"
-#        - docker tag build-image:latest modveterans/forms:"$DOCKER_TAG"
-#        - docker push modveterans/forms:"$DOCKER_TAG"
 
       deploy:
         - provider: script
