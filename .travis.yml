@@ -20,7 +20,7 @@ jobs:
   include:
     - stage: Build Docker Image
       # if: branch IN ("development", "uat")
-      if: branch IN ("development")
+      if: branch IN ("development", "sandbox")
       script:
         - chmod 755 ci/upload.sh
         - echo "$DOCKER_SECRET" | docker login -u "$DOCKER_USER" docker.io --password-stdin
