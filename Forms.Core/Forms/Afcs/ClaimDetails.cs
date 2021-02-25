@@ -203,7 +203,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-illness-condition-dueto",
                     Header = "Is your condition due to exposure to?:",
-                    NextPageId = "claim-condition-start-date",
+                    NextPageId = "claim-first-medical-attention-date",
                     Questions = new List<BaseQuestion>
                     {
                         new CheckboxQuestion
@@ -224,21 +224,22 @@ namespace Forms.Core.Forms.Afcs
                     }
                 },
 
-                    new TaskQuestionPage
-                {
-                    Id = "claim-condition-start-date",
-                    Header = "When did your condition start?",
-                    NextPageId = "claim-first-medical-attention-date",
-                    Questions = new List<BaseQuestion>
-                    {
-                        new DateInputQuestion
-                        {
-                            Id = "question1",
-                            Hint = "If unknown give approx date. For example, 27 03 2007",
-                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
-                        }
-                    }
-                },
+                   //removed due to duplicate questio
+                //    new TaskQuestionPage
+                //{
+                //    Id = "claim-condition-start-date",
+                //    Header = "When did your condition start?",
+                //    NextPageId = "claim-first-medical-attention-date",
+                //    Questions = new List<BaseQuestion>
+                //    {
+                //        new DateInputQuestion
+                //        {
+                //            Id = "question1",
+                //            Hint = "If unknown give approx date. For example, 27 03 2007",
+                //            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                //        }
+                //    }
+                //},
 
                        new TaskQuestionPage
                 {
@@ -285,7 +286,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-illness-downgraded-dates",
                     Header = "When were you downgraded?",
-                    NextPageId = "claim-illness-note",//"claim-accident-location",//
+                    NextPageId = "claim-illness-note",
                     Questions = new List<BaseQuestion>
                     {
                         new DateInputQuestion
@@ -301,7 +302,32 @@ namespace Forms.Core.Forms.Afcs
                             Label = "Date to:",
                             Hint = "For example, 27 03 2010",
                             Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
-                        }
+                        },
+                        new TextInputQuestion
+                        {
+                            Label = "From Medical Category",
+                            Id = "question3",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+
+                        new TextInputQuestion
+                        {
+                            Label = "To Medical Category",
+                            Id = "question4",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
                     }
                 },
 
@@ -309,14 +335,14 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                 {
                     Id = "claim-illness-note",
-                    Header = "Why is your codition related to your arm forces serive?",
+                    Header = "Why is your codition related to your armed forces service?",
                     IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
                         "Include information you think is relevant but do not include details of operations.  " +
                         "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
                         "please tell us why here.<br><br>" +
 
                         "Note: You MUST NOT include information classified as Secret or above.  " +
-                        "If you need to tell us information classified as Secret or above, please write “Classified  Information” here and " +
+                        "If you need to tell us information classified as Secret or above, please write &#8220;Classified  Information&#8220; here and " +
                         "we will contact you after we receive your claim.<br><br>"+
 
                         "If you have served or are serving (whether directly or in a support role) with the United Kingdom Special Forces (UKSF),"+
@@ -330,7 +356,7 @@ namespace Forms.Core.Forms.Afcs
                         new TextareaQuestion
                         {
                             Id = "question1",
-                            Rows = 5,
+                            Rows = 8,
                             //Hint = "What were the chemical, biological or hazardous substances you were exposed to?",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
@@ -376,16 +402,15 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-accident-non-sporting-medical-condition",
                     NextPageId = "claim-accident-non-sporting-surgery-address",
-                    Header = "What medical condition(s) are you claiming for?  " + 
-                        "Where you have any specific medical diagnosis, please include them here",
-                    WarningText = "",
+                    Header = "What medical condition(s) are you claiming for?  " , 
+                    IntroText =    "Where you have any specific medical diagnosis, please include them here",
                     Questions = new List<BaseQuestion>
                     {
                         new TextareaQuestion
                         {
                             Id = "question1",
                             Hint = "Please include all claimed medical conditions relating to the incident. " +
-                            "Tell us which side of the body is affected where needed (e.g. leftarm)",
+                            "Tell us which side of the body is affected where needed (e.g. left arm)",
                             Rows = 5,
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
@@ -513,7 +538,7 @@ namespace Forms.Core.Forms.Afcs
                  new TaskQuestionPage
                 {
                     Id = "claim-accident-non-sporting-report-to",
-                    Header = "Who did you report the incident to?:",
+                    Header = "Who did you report the incident to?",
                     NextPageId = "claim-accident-non-sporting-form",
                     Questions = new List<BaseQuestion>
                     {
@@ -536,7 +561,7 @@ namespace Forms.Core.Forms.Afcs
                   new TaskQuestionPage
                 {
                     Id = "claim-accident-non-sporting-form",
-                    Header = "Was accident form completed?",
+                    Header = "Was an accident form completed?",
                     NextPageId = "claim-accident-non-sporting-location",
                     Questions = new List<BaseQuestion>
                     {
@@ -545,7 +570,7 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             Options = new List<string>
                             {
-                                "Yes [upload note here]", "No"
+                                "Yes [Please send us a copy if you have one or you can upload a copy later in this application]", "No"
                             },
                             Validator = new RadioValidation(new RadioValidationProperties())
                         }
@@ -564,7 +589,7 @@ namespace Forms.Core.Forms.Afcs
                   new TaskQuestionPage
                 {
                     Id = "claim-accident-non-sporting-location",
-                    Header = "Where you were when the incident happened?",
+                    Header = "Where were you when the incident happened?",
                     NextPageId = "claim-accident-non-sporting-activity",
                     Questions = new List<BaseQuestion>
                     {
@@ -576,8 +601,8 @@ namespace Forms.Core.Forms.Afcs
                                 "Operations location overseas",
                                 "Operations location UK",
                                 "Home base",
-                                "Accomodation - Ops",
-                                "Accomodation - base",
+                                "Accomodation whilst on Operations",
+                                "Accomodation on home base",
                                 "An off-duty location"
                             },
                             Validator = new RadioValidation(new RadioValidationProperties())
@@ -640,7 +665,7 @@ namespace Forms.Core.Forms.Afcs
                    new TaskQuestionPage
                 {
                     Id = "claim-accident-non-sporting-journey-reason",
-                    Header = "Where were you doing at the time the incident occured?",
+                    Header = "What was the reason for your journey?",
                     NextPageId = "claim-accident-non-sporting-journey-from",
                     Questions = new List<BaseQuestion>
                     {
@@ -1005,7 +1030,32 @@ namespace Forms.Core.Forms.Afcs
                             Label = "Date to:",
                             Hint = "For example, 27 03 2010",
                             Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
-                        }
+                        },
+                        new TextInputQuestion
+                        {
+                            Label = "From Medical Category",
+                            Id = "question3",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+
+                        new TextInputQuestion
+                        {
+                            Label = "To Medical Category",
+                            Id = "question4",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
                     }
                 },
 
@@ -1013,14 +1063,14 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                 {
                     Id = "claim-accident-note",
-                    Header = "Why is your codition related to your arm forces serive?",
+                    Header = "Why is your codition related to your armed forces service?",
                     IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
                         "Include information you think is relevant but do not include details of operations.  " +
                         "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
                         "please tell us why here.<br><br>" +
 
                         "Note: You MUST NOT include information classified as Secret or above.  " +
-                        "If you need to tell us information classified as Secret or above, please write “Classified  Information” here and " +
+                        "If you need to tell us information classified as Secret or above, please write &#8220;Classified  Information&#8220; here and " +
                         "we will contact you after we receive your claim.<br><br>"+
 
                         "If you have served or are serving (whether directly or in a support role) with the United Kingdom Special Forces (UKSF),"+
@@ -1034,7 +1084,7 @@ namespace Forms.Core.Forms.Afcs
                         new TextareaQuestion
                         {
                             Id = "question1",
-                            Rows = 5,
+                            Rows = 8,
                             //Hint = "What were the chemical, biological or hazardous substances you were exposed to?",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
@@ -1188,7 +1238,7 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             Options = new List<string>
                             {
-                                "Yes [Please send us copies of part 1orders/ admin istructions/ authorisation. You can " +
+                                "Yes [Please send us copies of part 1 orders/admin istructions/authorisation. You can " +
                                 "upload a copy later in the application]",
                                 "No"
                             },
@@ -1404,7 +1454,32 @@ namespace Forms.Core.Forms.Afcs
                             Label = "Date to:",
                             Hint = "For example, 27 03 2010",
                             Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
-                        }
+                        },
+                        new TextInputQuestion
+                        {
+                            Label = "From Medical Category",
+                            Id = "question3",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+
+                        new TextInputQuestion
+                        {
+                            Label = "To Medical Category",
+                            Id = "question4",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
                     }
                 },
 
@@ -1412,14 +1487,14 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                 {
                     Id = "claim-accident-sporting-note",
-                    Header = "Why is your codition related to your arm forces serive?",
+                    Header = "Why is your codition related to your armed forces service?",
                     IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
                         "Include information you think is relevant but do not include details of operations.  " +
                         "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
                         "please tell us why here.<br><br>" +
 
                         "Note: You MUST NOT include information classified as Secret or above.  " +
-                        "If you need to tell us information classified as Secret or above, please write “Classified  Information” here and " +
+                        "If you need to tell us information classified as Secret or above, please write &#8220;Classified  Information&#8220; here and " +
                         "we will contact you after we receive your claim.<br><br>"+
 
                         "If you have served or are serving (whether directly or in a support role) with the United Kingdom Special Forces (UKSF),"+
@@ -1430,7 +1505,7 @@ namespace Forms.Core.Forms.Afcs
                         new TextareaQuestion
                         {
                             Id = "question1",
-                            Rows = 5,
+                            Rows = 8,
                             //Hint = "What were the chemical, biological or hazardous substances you were exposed to?",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
