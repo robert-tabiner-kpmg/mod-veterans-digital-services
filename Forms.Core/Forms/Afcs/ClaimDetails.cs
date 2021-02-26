@@ -38,8 +38,8 @@ namespace Forms.Core.Forms.Afcs
                 new TaskQuestionPage
                 {
                     Id = "claim-illness",
-                    Header = "What is the condition, injury or illness you are claiming for?",
-                    NextPageId = "claim-accident-date", 
+                    Header = "What type of medical condition, injury or illness you are claiming for?",
+                    NextPageId = "claim-illness-condition", 
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
@@ -59,16 +59,111 @@ namespace Forms.Core.Forms.Afcs
                         new PathChangeEffect(x =>
                             x.First().Answer.Values["default"] ==
                             "A condition, injury or illness that is the result of a specific accident or incident"
-                                ? "claim-accident-date"
-                                : "claim-time-date")
+                                ? "claim-accident-condition"
+                                //: "claim-time-date")
+                                : "claim-illness-condition")
                     }
 
                 },
+                //new question added as per reuqirment document version 0.2
+
                 new TaskQuestionPage
                 {
-                    Id = "claim-accident-date",
-                    Header = "What was the date of the incident/accident?",
-                    NextPageId = "claim-accident-location",
+                    Id = "claim-illness-condition",
+                    Header = "What medical condition are you claiming for?",
+                    IntroText = "Where you have a specific medical diagnosis, please include this here",
+                    //NextPageId = "claim-accident-journey-reason",//"claim-accident-location",
+                   NextPageId = "claim-illness-surgery-address",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextInputQuestion
+                        {
+                            Id = "question1",
+                            //Hint = "Please provide your rank at the time",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 30
+                            })
+                        }
+                    }
+                },
+
+                   new TaskQuestionPage
+                        {
+                            Id = "claim-illness-surgery-address",
+                            NextPageId = "claim-illness-date",//"claim-other-treatment",
+                            Header = "Which Medical Practioner gave you the diagnosis (if known)?",
+                            Questions = new List<BaseQuestion>
+                            {
+                                new TextInputQuestion
+                                {
+                                    Label = "Name",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Label = "Address",
+                                    Hint = "Building and street",
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question3",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
+                                    Hint = "Town or city",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question5",
+                                    Hint = "County",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question6",
+                                    Hint = "Postcode",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Id = "question7",
+                                    Label = "Telephone number"
+                                },
+
+                                new TextInputQuestion()
+                                {
+                                    Id = "question8",
+                                    Label = "Email",
+                                    Type = "email",
+                                    Autocomplete = "email",
+                                    Width = 50,
+                                    Validator = new EmailValidation(new EmailValidationProperties()
+                                        {
+                                            IsRequired = false
+                                        })
+                                }
+
+                            }
+                        },
+
+                new TaskQuestionPage
+                {
+                    Id = "claim-illness-date",
+                    Header = "What was the date your condition started?",
+                    NextPageId = "claim-illness-condition-related",
                     Questions = new List<BaseQuestion>
                     {
                         new DateInputQuestion
@@ -76,6 +171,1347 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             Hint = "For example 27 3 2007",
                             Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+
+                  new TaskQuestionPage
+                {
+                    Id = "claim-illness-condition-related",
+                    Header = "Is your Illness/Condition related to:",
+                    NextPageId = "claim-illness-condition-dueto",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new CheckboxQuestion
+                        {
+                            Id = "question1",
+                            Label = "Select all that apply",
+                            Options = new List<string>
+                            {
+                                "Duties - Operations overseas",
+                                "Duties - Operations UK",
+                                "Trade",
+                                "Training",
+                                "Misconduct by others",
+                                "Consequential to another medical condition"
+                            }
+                        }
+                    }
+                },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-illness-condition-dueto",
+                    Header = "Is your condition due to exposure to?:",
+                    NextPageId = "claim-first-medical-attention-date",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new CheckboxQuestion
+                        {
+                            Id = "question1",
+                            Label = "Select all that apply",
+                            Options = new List<string>
+                            {
+                                "Cold",
+                                "Heat",
+                                "Noise",
+                                "Vibration",
+                                "Chemical exposure If Y What substance",
+                                "Date you were first exposed to these:",
+                                "Length of exposure"
+                            }
+                        }
+                    }
+                },
+
+                   //removed due to duplicate questio
+                //    new TaskQuestionPage
+                //{
+                //    Id = "claim-condition-start-date",
+                //    Header = "When did your condition start?",
+                //    NextPageId = "claim-first-medical-attention-date",
+                //    Questions = new List<BaseQuestion>
+                //    {
+                //        new DateInputQuestion
+                //        {
+                //            Id = "question1",
+                //            Hint = "If unknown give approx date. For example, 27 03 2007",
+                //            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                //        }
+                //    }
+                //},
+
+                       new TaskQuestionPage
+                {
+                    Id = "claim-first-medical-attention-date",
+                    Header = "When did you first seek medical attention for the condition(s)?",
+                    NextPageId = "claim-illness-downgraded",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Hint = "If unknown give approx date. For example, 27 03 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+                    new TaskQuestionPage
+                {
+                    Id = "claim-illness-downgraded",
+                    NextPageId = "claim-illness-downgraded-dates",
+                    Header = "Were you downgraded for any of the conditions on this claim?",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] == "Yes"
+                                ? "claim-illness-downgraded-dates"
+                                : "claim-illness-note")
+                    }
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-illness-downgraded-dates",
+                    Header = "When were you downgraded?",
+                    NextPageId = "claim-illness-note",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Label = "Date from:",
+                            Hint = "For example, 27 03 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new DateInputQuestion
+                        {
+                            Id = "question2",
+                            Label = "Date to:",
+                            Hint = "For example, 27 03 2010",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new TextInputQuestion
+                        {
+                            Label = "From Medical Category",
+                            Id = "question3",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+
+                        new TextInputQuestion
+                        {
+                            Label = "To Medical Category",
+                            Id = "question4",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+                    }
+                },
+
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-illness-note",
+                    Header = "Why is your codition related to your armed forces service?",
+                    IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
+                        "Include information you think is relevant but do not include details of operations.  " +
+                        "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
+                        "please tell us why here.<br><br>" +
+
+                        "Note: You MUST NOT include information classified as Secret or above.  " +
+                        "If you need to tell us information classified as Secret or above, please write &#8220;Classified  Information&#8220; here and " +
+                        "we will contact you after we receive your claim.<br><br>"+
+
+                        "If you have served or are serving (whether directly or in a support role) with the United Kingdom Special Forces (UKSF),"+
+                        "you must seek advice from the MOD A Block Disclosure Cell BEFORE completing this section. " +
+                        "The Disclosure Cell can be contacted by emailing MAB-J1-Disclosures-ISA-Mailbox@mod.gov.uk .",
+
+                    //NextPageId = "claim-accident-journey-reason",//"claim-accident-location",
+                   //NextPageId = "claim-accident-location",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Rows = 8,
+                            //Hint = "What were the chemical, biological or hazardous substances you were exposed to?",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 1500
+                            })
+                        }
+                    }
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-condition",
+                    Header = "Was the Incident/Accident related to Sporting/Adventure Training/Physical Training?",
+                    NextPageId = "claim-accident-non-sporting-medical-condition",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Label = "Please select the option:",
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes",
+                                "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-sporting-medical-condition"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-medical-condition")
+                    }
+
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-medical-condition",
+                    NextPageId = "claim-accident-non-sporting-surgery-address",
+                    Header = "What medical condition(s) are you claiming for?  " , 
+                    IntroText =    "Where you have any specific medical diagnosis, please include them here",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Hint = "Please include all claimed medical conditions relating to the incident. " +
+                            "Tell us which side of the body is affected where needed (e.g. left arm)",
+                            Rows = 5,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 250
+                            })
+                        }
+                    }
+                },
+
+                     new TaskQuestionPage
+                        {
+                            Id = "claim-accident-non-sporting-surgery-address",
+                            NextPageId = "claim-accident-non-sporting-date",//"claim-other-treatment",
+                            Header = "Which Medical Practioner gave you the diagnosis (if known)?",
+                            Questions = new List<BaseQuestion>
+                            {
+                                new TextInputQuestion
+                                {
+                                    Label = "Name",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Label = "Address",
+                                    Hint = "Building and street",
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question3",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
+                                    Hint = "Town or city",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question5",
+                                    Hint = "County",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question6",
+                                    Hint = "Postcode",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Id = "question7",
+                                    Label = "Telephone number"
+                                },
+
+                                new TextInputQuestion()
+                                {
+                                    Id = "question8",
+                                    Label = "Email",
+                                    Type = "email",
+                                    Autocomplete = "email",
+                                    Width = 50,
+                                    Validator = new EmailValidation(new EmailValidationProperties()
+                                        {
+                                            IsRequired = false
+                                        })
+                                }
+
+                            }
+                        },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-date",
+                    Header = "What was the date of injury/ incident?",
+                    NextPageId = "claim-accident-non-sporting-duty",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Hint = "For example 27 3 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-duty",
+                    Header = "Were you on duty at the time of incident?",
+                    NextPageId = "claim-accident-non-sporting-report-to",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-report-to"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-form")
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-report-to",
+                    Header = "Who did you report the incident to?",
+                    NextPageId = "claim-accident-non-sporting-form",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new CheckboxQuestion
+                        {
+                            Id = "question1",
+                            Label = "Select all that apply",
+                            Options = new List<string>
+                            {
+                                "Unit medic",
+                                "Hospital",
+                                "Chain of command",
+                                "Colleague",
+                                "Other person"
+                            }
+                        }
+                    }
+                },
+
+                  new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-form",
+                    Header = "Was an accident form completed?",
+                    NextPageId = "claim-accident-non-sporting-location",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes [Please send us a copy if you have one or you can upload a copy later in this application]", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-location"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-location")
+                    }
+                },
+
+                  new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-location",
+                    Header = "Where were you when the incident happened?",
+                    NextPageId = "claim-accident-non-sporting-activity",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations location overseas",
+                                "Operations location UK",
+                                "Home base",
+                                "Accomodation whilst on Operations",
+                                "Accomodation on home base",
+                                "An off-duty location"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+
+                },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-activity",
+                    Header = "What were you doing at the time the incident occured?",
+                    NextPageId = "claim-accident-non-sporting-road-traffic",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations Duties overseas",
+                                "Operations Duties UK",
+                                "Home base duties",
+                                "Training Excercise",
+                                "Travelling"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-road-traffic",
+                    Header = "Was the incident a Road Traffic Accident?",
+                    NextPageId = "claim-accident-non-sporting-journey-reason",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-journey-reason"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-reported-to")
+                    }
+                },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-journey-reason",
+                    Header = "What was the reason for your journey?",
+                    NextPageId = "claim-accident-non-sporting-journey-from",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Duties - Operations",
+                                "Duties - Trade",
+                                "Duties - Training",
+                                "Personal (non-duty/off-duty)"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-journey-from",
+                    Header = "Where did your journey start?",
+                    NextPageId = "claim-accident-non-sporting-journey-to",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations location overseas",
+                                "Operations location - UK",
+                                "Accomodation - field",
+                                "Accomodation - base",
+                                "Home base",
+                                "Your home",
+                                "An off-duty location"
+
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-journey-to",
+                    Header = "Where were you travelling to?",
+                    NextPageId = "claim-accident-non-sporting-direct-route",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Operations location overseas",
+                                "Operations location - UK",
+                                "Accomodation - Operations",
+                                "Accomodation - base",
+                                "Home base",
+                                "Your home",
+                                "An off-duty location"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                   },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-direct-route",
+                    Header = "Were you on a direct route?",
+                    NextPageId = "claim-accident-non-sporting-reported-to",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-non-sporting-reported-to"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-reported-to")
+                    }
+                },
+
+                      new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-reported-to",
+                    Header = "Was the incident reported to the civilian or military police?",
+                    NextPageId = "claim-accident-police-ref",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-police-ref"
+                                //: "claim-time-date")
+                                : "claim-accident-non-sporting-leave")
+                    }
+                },
+
+                      new TaskQuestionPage
+                {
+                    Id = "claim-accident-police-ref",
+                    NextPageId = "claim-accident-non-sporting-leave",
+                    Header = "Please tell us the Police reference number (if known)",
+                    //WarningText = "EPAW applies for UKSF",
+                    Questions = new List<BaseQuestion>
+                    {
+                       
+
+                            new TextInputQuestion
+                                {
+                                    Label = "Civilian - case ref:",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Label = "Military - case ref:",
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+
+                                new CheckboxQuestion
+                                {
+                                    Id = "question3",
+                                    //Label = "Select all that apply",
+                                    Options = new List<string>
+                                    {
+                                        "I don't know"
+                                    }
+                                }
+                    }
+
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-non-sporting-leave",
+                    Header = "Were you on authorised leave at the time of the accident?",
+                    NextPageId = "claim-accident-witness",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-witness",
+                    Header = "Were there any witness?",
+                    NextPageId = "claim-accident-first-aid",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-first-aid",
+                    Header = "Did you receive first aid treatment at the time?",
+                    NextPageId = "claim-accident-hospital-facility",
+                    IntroText="Please only tell us about treatment you received for the injury/condition that you are claiming for",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-hospital-facility",
+                    Header = "Did you go to, or were you taken to, a hospital or medical facility?",
+                    NextPageId = "claim-accident-hospital-address",
+                    IntroText="Please only tell us about treatment you received for the injury/condition that you are claiming for",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-hospital-address"
+                                //: "claim-time-date")
+                                : "claim-accident-downgraded")
+                    }
+                },
+                 new TaskQuestionPage
+                        {
+                            Id = "claim-accident-hospital-address",
+                            NextPageId = "claim-accident-downgraded",//"claim-other-treatment",
+                            Header = "Which hospital or medical facility were you taken to?",
+                            IntroText="Please only tell us about treatment you received for the injury/condition that you are claiming for",
+                            Questions = new List<BaseQuestion>
+                            {
+                                new TextInputQuestion
+                                {
+                                    Label = "Name",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Label = "Address",
+                                    Hint = "Building and street",
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question3",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
+                                    Hint = "Town or city",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question5",
+                                    Hint = "County",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question6",
+                                    Hint = "Postcode",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Id = "question7",
+                                    Label = "Telephone number"
+                                },
+
+                                new TextInputQuestion()
+                                {
+                                    Id = "question8",
+                                    Label = "Email",
+                                    Type = "email",
+                                    Autocomplete = "email",
+                                    Width = 50,
+                                    Validator = new EmailValidation(new EmailValidationProperties()
+                                        {
+                                            IsRequired = false
+                                        })
+                                }
+
+                            }
+                        },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-downgraded",
+                    NextPageId = "claim-accident-downgraded-dates",
+                    Header = "Were you downgraded for any of the conditions on this claim?",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] == "Yes"
+                                ? "claim-accident-downgraded-dates"
+                                : "claim-accident-note")
+                    }
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-downgraded-dates",
+                    Header = "When were you downgraded?",
+                    NextPageId = "claim-accident-note",//"claim-accident-location",//
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Label = "Date from:",
+                            Hint = "For example, 27 03 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new DateInputQuestion
+                        {
+                            Id = "question2",
+                            Label = "Date to:",
+                            Hint = "For example, 27 03 2010",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new TextInputQuestion
+                        {
+                            Label = "From Medical Category",
+                            Id = "question3",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+
+                        new TextInputQuestion
+                        {
+                            Label = "To Medical Category",
+                            Id = "question4",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+                    }
+                },
+
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-note",
+                    Header = "Why is your codition related to your armed forces service?",
+                    IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
+                        "Include information you think is relevant but do not include details of operations.  " +
+                        "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
+                        "please tell us why here.<br><br>" +
+
+                        "Note: You MUST NOT include information classified as Secret or above.  " +
+                        "If you need to tell us information classified as Secret or above, please write &#8220;Classified  Information&#8220; here and " +
+                        "we will contact you after we receive your claim.<br><br>"+
+
+                        "If you have served or are serving (whether directly or in a support role) with the United Kingdom Special Forces (UKSF),"+
+                        "you must seek advice from the MOD A Block Disclosure Cell BEFORE completing this section. " +
+                        "The Disclosure Cell can be contacted by emailing MAB-J1-Disclosures-ISA-Mailbox@mod.gov.uk .",
+
+                    //NextPageId = "claim-accident-journey-reason",//"claim-accident-location",
+                   //NextPageId = "claim-accident-location",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Rows = 8,
+                            //Hint = "What were the chemical, biological or hazardous substances you were exposed to?",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 1500
+                            })
+                        }
+                    }
+                },
+
+                new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-medical-condition",
+                    NextPageId = "claim-accident-sporting-surgery-address",
+                    Header = "What medical condition(s) are you claiming for?  " +
+                        "Where you have any specific medical diagnosis, please include them here",
+                    WarningText = "",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Hint = "Please include all claimed medical conditions relating to the incident. " +
+                            "Tell us which side of the body is affected where needed (e.g. leftarm)",
+                            Rows = 5,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 250
+                            })
+                        }
+                    }
+                },
+
+                     new TaskQuestionPage
+                        {
+                            Id = "claim-accident-sporting-surgery-address",
+                            NextPageId = "claim-accident-sporting-date",
+                            Header = "Which Medical Practioner gave you the diagnosis (if known)?",
+                            Questions = new List<BaseQuestion>
+                            {
+                                new TextInputQuestion
+                                {
+                                    Label = "Name",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Label = "Address",
+                                    Hint = "Building and street",
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question3",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
+                                    Hint = "Town or city",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question5",
+                                    Hint = "County",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question6",
+                                    Hint = "Postcode",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Id = "question7",
+                                    Label = "Telephone number"
+                                },
+
+                                new TextInputQuestion()
+                                {
+                                    Id = "question8",
+                                    Label = "Email",
+                                    Type = "email",
+                                    Autocomplete = "email",
+                                    Width = 50,
+                                    Validator = new EmailValidation(new EmailValidationProperties()
+                                        {
+                                            IsRequired = false
+                                        })
+                                }
+
+                            }
+                        },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-date",
+                    Header = "What was the date of injury/ incident?",
+                    NextPageId = "claim-accident-sporting-activity",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Hint = "For example 27 3 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        }
+                    }
+                },
+
+                  new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-activity",
+                    NextPageId = "claim-accident-sporting-authorize",
+                    Header = "What was the activity?",
+                    IntroText = "(E.G. skiing/football/diving)",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Rows = 3,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 100
+                            })
+                        }
+                    }
+                },
+
+                   new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-authorize",
+                    NextPageId = "claim-accident-sporting-related",
+                    Header = "Were you representing your Unit?",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes [Please send us copies of part 1 orders/admin istructions/authorisation. You can " +
+                                "upload a copy later in the application]",
+                                "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                },
+
+                     new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-related",
+                    NextPageId = "claim-accident-sporting-witness",
+                    Header = "Is your illness/condition related to",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Duties - Operations overseas",
+                                "Duties - Operations UK",
+                                "Trade",
+                                "Misconduct by others",
+                                "Consequential to another medical condition"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                },
+
+                      new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-witness",
+                    Header = "Were there any witness?",
+                    NextPageId = "claim-accident-sporting-first-aid",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-first-aid",
+                    Header = "Did you receive first aid treatment at the time?",
+                    NextPageId = "claim-accident-sporting-hospital-facility",
+                    IntroText="Please only tell us about treatment you received for the injury/condition that you are claiming for",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    }
+                },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-hospital-facility",
+                    Header = "Did you go to, or were you taken to, a hospital or medical facility?",
+                    NextPageId = "claim-accident-sporting-hospital-address",
+                    IntroText="Please only tell us about treatment you received for the injury/condition that you are claiming for",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "claim-accident-sporting-hospital-address"
+                                //: "claim-time-date")
+                                : "claim-accident-sporting-downgraded")
+                    }
+                },
+                 new TaskQuestionPage
+                        {
+                            Id = "claim-accident-sporting-hospital-address",
+                            NextPageId = "claim-accident-sporting-downgraded",//"claim-other-treatment",
+                            Header = "Which hospital or medical facility were you taken to?",
+                            IntroText="Please only tell us about treatment you received for the injury/condition that you are claiming for",
+                            Questions = new List<BaseQuestion>
+                            {
+                                new TextInputQuestion
+                                {
+                                    Label = "Name",
+                                    Id = "question1",
+                                    Type = "Text"
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Label = "Address",
+                                    Hint = "Building and street",
+                                    Id = "question2",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question3",
+                                    Type = "Text"
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question4",
+                                    Hint = "Town or city",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question5",
+                                    Hint = "County",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+                                new TextInputQuestion
+                                {
+                                    Id = "question6",
+                                    Hint = "Postcode",
+                                    Type = "Text",
+                                    Width = 12
+                                },
+
+                                new TextInputQuestion
+                                {
+                                    Id = "question7",
+                                    Label = "Telephone number"
+                                },
+
+                                new TextInputQuestion()
+                                {
+                                    Id = "question8",
+                                    Label = "Email",
+                                    Type = "email",
+                                    Autocomplete = "email",
+                                    Width = 50,
+                                    Validator = new EmailValidation(new EmailValidationProperties()
+                                        {
+                                            IsRequired = false
+                                        })
+                                }
+
+                            }
+                        },
+
+                 new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-downgraded",
+                    NextPageId = "claim-accident-sporting-downgraded-dates",
+                    Header = "Were you downgraded for any of the conditions on this claim?",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Options = new List<string>
+                            {
+                                "Yes", "No"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] == "Yes"
+                                ? "claim-accident-sporting-downgraded-dates"
+                                : "claim-accident-sporting-note")
+                    }
+                },
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-downgraded-dates",
+                    Header = "When were you downgraded?",
+                    NextPageId = "claim-accident-sporting-note",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new DateInputQuestion
+                        {
+                            Id = "question1",
+                            Label = "Date from:",
+                            Hint = "For example, 27 03 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new DateInputQuestion
+                        {
+                            Id = "question2",
+                            Label = "Date to:",
+                            Hint = "For example, 27 03 2010",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new TextInputQuestion
+                        {
+                            Label = "From Medical Category",
+                            Id = "question3",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+
+                        new TextInputQuestion
+                        {
+                            Label = "To Medical Category",
+                            Id = "question4",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 20
+                            })
+                        },
+                    }
+                },
+
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-accident-sporting-note",
+                    Header = "Why is your codition related to your armed forces service?",
+                    IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
+                        "Include information you think is relevant but do not include details of operations.  " +
+                        "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
+                        "please tell us why here.<br><br>" +
+
+                        "Note: You MUST NOT include information classified as Secret or above.  " +
+                        "If you need to tell us information classified as Secret or above, please write &#8220;Classified  Information&#8220; here and " +
+                        "we will contact you after we receive your claim.<br><br>"+
+
+                        "If you have served or are serving (whether directly or in a support role) with the United Kingdom Special Forces (UKSF),"+
+                        "you must seek advice from the MOD A Block Disclosure Cell BEFORE completing this section. " +
+                        "The Disclosure Cell can be contacted by emailing MAB-J1-Disclosures-ISA-Mailbox@mod.gov.uk .",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextareaQuestion
+                        {
+                            Id = "question1",
+                            Rows = 8,
+                            //Hint = "What were the chemical, biological or hazardous substances you were exposed to?",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 1500
+                            })
                         }
                     }
                 },
