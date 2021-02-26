@@ -216,9 +216,9 @@ namespace Forms.Core.Forms.Afcs
                                 "Heat",
                                 "Noise",
                                 "Vibration",
-                                "Chemical exposure If Y What substance",
-                                "Date you were first exposed to these:",
-                                "Length of exposure"
+                                "Chemical exposure"// If Y What substance",
+                                //"Date you were first exposed to these:",
+                                //"Length of exposure"
                             }
                         }
                     }
