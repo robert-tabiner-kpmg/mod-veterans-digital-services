@@ -203,7 +203,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-illness-condition-dueto",
                     Header = "Is your condition due to exposure to?:",
-                    NextPageId = "claim-first-medical-attention-date",
+                    NextPageId ="claim-illness-first-medical-attention-date",
                     Questions = new List<BaseQuestion>
                     {
                         new CheckboxQuestion
@@ -216,34 +216,65 @@ namespace Forms.Core.Forms.Afcs
                                 "Heat",
                                 "Noise",
                                 "Vibration",
-                                "Chemical exposure"// If Y What substance",
-                                //"Date you were first exposed to these:",
-                                //"Length of exposure"
-                            }
+                                "Chemical exposure"
+                            }, 
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values.ContainsValue("Chemical exposure")
+                                ? "claim-illness-condition-chemical-exposure"
+                                : "claim-illness-first-medical-attention-date")
+                    }
+                },
+
+
+                    new TaskQuestionPage
+                {
+                    Id = "claim-illness-condition-chemical-exposure",
+                    Header = "Please tell us about the chemical exposure?",
+                    NextPageId = "claim-illness-first-medical-attention-date",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new TextInputQuestion
+                        {
+                            Label = "What substances?",
+                            Id = "question1",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 50
+                            })
+                        },
+                        new DateInputQuestion
+                        {
+                            Id = "question2",
+                            Label="Date you were first exposed to these?",
+                            Hint = "If unknown give approx date. For example, 27 03 2007",
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+                        new TextInputQuestion
+                        {
+                            Label = "Length of exposure",
+                            Id = "question3",
+                            Type = "Text",
+                            Width=20,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 50
+                            })
                         }
                     }
                 },
 
-                   //removed due to duplicate questio
-                //    new TaskQuestionPage
-                //{
-                //    Id = "claim-condition-start-date",
-                //    Header = "When did your condition start?",
-                //    NextPageId = "claim-first-medical-attention-date",
-                //    Questions = new List<BaseQuestion>
-                //    {
-                //        new DateInputQuestion
-                //        {
-                //            Id = "question1",
-                //            Hint = "If unknown give approx date. For example, 27 03 2007",
-                //            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
-                //        }
-                //    }
-                //},
-
                        new TaskQuestionPage
                 {
-                    Id = "claim-first-medical-attention-date",
+                    Id = "claim-illness-first-medical-attention-date",
                     Header = "When did you first seek medical attention for the condition(s)?",
                     NextPageId = "claim-illness-downgraded",
                     Questions = new List<BaseQuestion>
@@ -335,7 +366,7 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                 {
                     Id = "claim-illness-note",
-                    Header = "Why is your codition related to your armed forces service?",
+                    Header = "Why is your condition related to your armed forces service?",
                     IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
                         "Include information you think is relevant but do not include details of operations.  " +
                         "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
@@ -552,7 +583,8 @@ namespace Forms.Core.Forms.Afcs
                                 "Hospital",
                                 "Chain of command",
                                 "Colleague",
-                                "Other person"
+                                "Other person",
+                                "I didn't report the incident"
                             }
                         }
                     }
@@ -1063,7 +1095,7 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                 {
                     Id = "claim-accident-note",
-                    Header = "Why is your codition related to your armed forces service?",
+                    Header = "Why is your condition related to your armed forces service?",
                     IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
                         "Include information you think is relevant but do not include details of operations.  " +
                         "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
@@ -1099,9 +1131,8 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-accident-sporting-medical-condition",
                     NextPageId = "claim-accident-sporting-surgery-address",
-                    Header = "What medical condition(s) are you claiming for?  " +
-                        "Where you have any specific medical diagnosis, please include them here",
-                    WarningText = "",
+                    Header = "What medical condition(s) are you claiming for?  " ,
+                     IntroText =   "Where you have any specific medical diagnosis, please include them here",
                     Questions = new List<BaseQuestion>
                     {
                         new TextareaQuestion
@@ -1487,7 +1518,7 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                 {
                     Id = "claim-accident-sporting-note",
-                    Header = "Why is your codition related to your armed forces service?",
+                    Header = "Why is your condition related to your armed forces service?",
                     IntroText="Tell us in your own words why you feel your claimed medical condition or injury is caused or  made worse by your service in the Armed Forces. " +
                         "Include information you think is relevant but do not include details of operations.  " +
                         "If you are claiming for a Road Traffic Accident and you were not on a direct route between your starting point and destination, " +
