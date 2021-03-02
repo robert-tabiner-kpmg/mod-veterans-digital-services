@@ -44,7 +44,7 @@ namespace Forms.Core.Forms.Afcs
                     {
                         new RadioQuestion
                         {
-                            Label = "Please select the option that applies to your claim:",
+                            Hint = "Please select the option that applies to your claim:",
                             Id = "question1",
                             Options = new List<string>
                             {
@@ -112,27 +112,28 @@ namespace Forms.Core.Forms.Afcs
                                 },
                                 new TextInputQuestion
                                 {
+                                    Label = "",
                                     Id = "question3",
                                     Type = "Text"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question4",
-                                    Hint = "Town or city",
+                                    Label = "Town or city",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question5",
-                                    Hint = "County",
+                                    Label = "County",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question6",
-                                    Hint = "Postcode",
+                                    Label = "Postcode",
                                     Type = "Text",
                                     Width = 12
                                 },
@@ -185,7 +186,7 @@ namespace Forms.Core.Forms.Afcs
                         new CheckboxQuestion
                         {
                             Id = "question1",
-                            Label = "Select all that apply",
+                            Hint = "Select all that apply",
                             Options = new List<string>
                             {
                                 "Duties - Operations overseas",
@@ -202,14 +203,14 @@ namespace Forms.Core.Forms.Afcs
                    new TaskQuestionPage
                 {
                     Id = "claim-illness-condition-dueto",
-                    Header = "Is your condition due to exposure to?:",
+                    Header = "Is your condition due to exposure to?",
                     NextPageId ="claim-illness-first-medical-attention-date",
                     Questions = new List<BaseQuestion>
                     {
                         new CheckboxQuestion
                         {
                             Id = "question1",
-                            Label = "Select all that apply",
+                            Hint = "Select all that apply",
                             Options = new List<string>
                             {
                                 "Cold",
@@ -395,6 +396,20 @@ namespace Forms.Core.Forms.Afcs
                                 MaxLength = 1500
                             })
                         }
+
+                        //new TextInputQuestion
+                        //{
+                        //    //Label = "From Medical Category",
+                        //    Id = "question1",
+                        //    Type = "Text",
+                        //    Width=20,
+                            
+                        //    Validator = new TextInputValidation(new TextInputValidationProperties
+                        //    {
+                        //        IsRequired = true,
+                        //        MaxLength = 20
+                        //    })
+                        //},
                     }
                 },
 
@@ -407,7 +422,7 @@ namespace Forms.Core.Forms.Afcs
                     {
                         new RadioQuestion
                         {
-                            Label = "Please select the option:",
+                            Hint = "Please select the option:",
                             Id = "question1",
                             Options = new List<string>
                             {
@@ -476,26 +491,27 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question3",
+                                    Label="",
                                     Type = "Text"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question4",
-                                    Hint = "Town or city",
+                                    Label = "Town or city",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question5",
-                                    Hint = "County",
+                                    Label = "County",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question6",
-                                    Hint = "Postcode",
+                                    Label = "Postcode",
                                     Type = "Text",
                                     Width = 12
                                 },
@@ -576,7 +592,7 @@ namespace Forms.Core.Forms.Afcs
                         new CheckboxQuestion
                         {
                             Id = "question1",
-                            Label = "Select all that apply",
+                            Hint = "Select all that apply",
                             Options = new List<string>
                             {
                                 "Unit medic",
@@ -970,26 +986,27 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question3",
+                                    Label = "",
                                     Type = "Text"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question4",
-                                    Hint = "Town or city",
+                                    Label = "Town or city",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question5",
-                                    Hint = "County",
+                                    Label = "County",
                                     Type = "Text",
                                     Width = 12
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question6",
-                                    Hint = "Postcode",
+                                    Label = "Postcode",
                                     Type = "Text",
                                     Width = 12
                                 },
@@ -1174,28 +1191,32 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question3",
-                                    Type = "Text"
+                                    Type = "Text",
+                                    Label = ""
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question4",
                                     Hint = "Town or city",
                                     Type = "Text",
-                                    Width = 12
+                                    Width = 12,
+                                    Label = "Town or city"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question5",
                                     Hint = "County",
                                     Type = "Text",
-                                    Width = 12
+                                    Width = 12,
+                                    Label = "County"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question6",
                                     Hint = "Postcode",
                                     Type = "Text",
-                                    Width = 12
+                                    Width = 12,
+                                    Label = "Postcode"
                                 },
 
                                 new TextInputQuestion
@@ -1244,14 +1265,14 @@ namespace Forms.Core.Forms.Afcs
                     IntroText = "(E.G. skiing/football/diving)",
                     Questions = new List<BaseQuestion>
                     {
-                        new TextareaQuestion
+                        new TextInputQuestion
                         {
                             Id = "question1",
-                            Rows = 3,
+                            //Rows = 3,
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
                                 IsRequired = true,
-                                MaxLength = 100
+                                MaxLength = 100                              
                             })
                         }
                     }
@@ -1393,28 +1414,32 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question3",
-                                    Type = "Text"
+                                    Type = "Text",
+                                    Label = ""
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question4",
                                     Hint = "Town or city",
                                     Type = "Text",
-                                    Width = 12
+                                    Width = 12,
+                                    Label = "Town or city"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question5",
                                     Hint = "County",
                                     Type = "Text",
-                                    Width = 12
+                                    Width = 12,
+                                    Label = "County"
                                 },
                                 new TextInputQuestion
                                 {
                                     Id = "question6",
                                     Hint = "Postcode",
                                     Type = "Text",
-                                    Width = 12
+                                    Width = 12,
+                                    Label = "Postcode"
                                 },
 
                                 new TextInputQuestion
