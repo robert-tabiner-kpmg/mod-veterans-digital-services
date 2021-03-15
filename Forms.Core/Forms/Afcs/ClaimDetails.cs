@@ -172,6 +172,15 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             Hint = "For example 27 3 2007",
                             Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                        },
+
+                        new CheckboxQuestion
+                        {
+                            Id = "question2",
+                            Options = new List<string>
+                            {
+                                "Tick if this date is approximate"
+                            }
                         }
                     }
                 },

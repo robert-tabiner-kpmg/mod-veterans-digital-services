@@ -27,6 +27,7 @@ namespace Forms.Core.Forms.Afcs
                 PersonalDetails.Task,
                 ServiceDetails.Task,
                 ClaimDetails.Task,
+                OtherMedicalTreatment.Task,
                 OtherCompensation.Task,
                 AboutBenefits.Task,
                 PaymentDetails.Task,
