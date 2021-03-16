@@ -17,7 +17,7 @@ namespace Forms.Core.Forms.Afcs
             Id = "nominate-representative-task",
             SummaryPage = new SummaryPage(),
             Name = "Nominate a representative",
-            GroupNameIndex = 5,
+            GroupNameIndex = 1,
             TaskItems = new List<ITaskItem>
             {
                 new TaskQuestionPage

@@ -14,7 +14,7 @@ namespace Forms.Core.Forms.Afcs
         {
             Id = "payment-details-task",
             Name = "Payment details",
-            GroupNameIndex = 4,
+            GroupNameIndex = 5,
             SummaryPage = new SummaryPage(),
             TaskItems = new List<ITaskItem>
             {

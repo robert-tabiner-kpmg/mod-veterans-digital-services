@@ -16,7 +16,7 @@ namespace Forms.Core.Forms.Afcs
         {
             Id = "other-medical-reatment-task",
             Name = "Other Medical Treatment",
-            GroupNameIndex = 3,
+            GroupNameIndex = 4,
             SummaryPage = new SummaryPage(),
             PostTaskPage = new RepeatTaskPage
             {

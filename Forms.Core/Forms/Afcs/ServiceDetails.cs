@@ -12,7 +12,7 @@ namespace Forms.Core.Forms.Afcs
         {
             Id = "service-details-task",
             Name = "Service details",
-            GroupNameIndex = 1,
+            GroupNameIndex = 2,
             PreTaskPage = new PreTaskPage()
             {
                 Header = "Service details",

@@ -15,7 +15,7 @@ namespace Forms.Core.Forms.Afcs
         {
             Id = "other-compensation-task",
             Name = "Other compensation",
-            GroupNameIndex = 3,
+            GroupNameIndex = 4,
             SummaryPage = new SummaryPage(),
             TaskItems = new List<ITaskItem>
             {
