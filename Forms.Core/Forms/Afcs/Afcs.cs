@@ -14,16 +14,18 @@ namespace Forms.Core.Forms.Afcs
             TaskGroups = new List<string>
             {
                 "Check before you start",
+                "Nominate a representative",
                 "About you",
                 "Your claim",
                 "Other details",
                 "Your payment details",
-                "Nominate a representative",
+                
                 "Declaration and application submission"
             },
             Tasks = new List<Task>
             {
                 ThingsToKnow.Task,
+                NominateRepresentative.Task,
                 PersonalDetails.Task,
                 ServiceDetails.Task,
                 ClaimDetails.Task,
@@ -31,7 +33,7 @@ namespace Forms.Core.Forms.Afcs
                 OtherCompensation.Task,
                 AboutBenefits.Task,
                 PaymentDetails.Task,
-                NominateRepresentative.Task,
+                
                 Declarations.Task
             },
             StartPage = new ContentPage

@@ -13,7 +13,7 @@ namespace Forms.Core.Forms.Afcs
             {
                 Id = "personal-details-task",
                 Name = "Personal details",
-                GroupNameIndex = 1,
+                GroupNameIndex = 2,
                 SummaryPage = new SummaryPage(),
                 PostTaskPage = null,
                 PreTaskPage = null,

@@ -16,7 +16,7 @@ namespace Forms.Core.Forms.Afcs
         {
             Id = "claims-details-task",
             Name = "Claim and medical details",
-            GroupNameIndex = 2,
+            GroupNameIndex = 3,
             SummaryPage = new SummaryPage(),
             PostTaskPage = new RepeatTaskPage
             {

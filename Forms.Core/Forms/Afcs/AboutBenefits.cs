@@ -12,7 +12,7 @@ namespace Forms.Core.Forms.Afcs
         {
             Id = "about-benefits-task",
             Name = "Other benefits, allowances or entitlement",
-            GroupNameIndex = 3,
+            GroupNameIndex = 4,
             SummaryPage = new SummaryPage(),
             TaskItems = new List<ITaskItem>
             {
