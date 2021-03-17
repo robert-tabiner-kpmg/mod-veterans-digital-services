@@ -1206,7 +1206,7 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question4",
-                                    Hint = "Town or city",
+                                    //Hint = "Town or city",
                                     Type = "Text",
                                     Width = 12,
                                     Label = "Town or city"
@@ -1214,7 +1214,7 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question5",
-                                    Hint = "County",
+                                    //Hint = "County",
                                     Type = "Text",
                                     Width = 12,
                                     Label = "County"
@@ -1222,7 +1222,7 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question6",
-                                    Hint = "Postcode",
+                                   // Hint = "Postcode",
                                     Type = "Text",
                                     Width = 12,
                                     Label = "Postcode"
@@ -1428,16 +1428,14 @@ namespace Forms.Core.Forms.Afcs
                                 },
                                 new TextInputQuestion
                                 {
-                                    Id = "question4",
-                                    Hint = "Town or city",
+                                    Id = "question4",                                   
                                     Type = "Text",
                                     Width = 12,
                                     Label = "Town or city"
                                 },
                                 new TextInputQuestion
                                 {
-                                    Id = "question5",
-                                    Hint = "County",
+                                    Id = "question5",                                   
                                     Type = "Text",
                                     Width = 12,
                                     Label = "County"
@@ -1445,7 +1443,6 @@ namespace Forms.Core.Forms.Afcs
                                 new TextInputQuestion
                                 {
                                     Id = "question6",
-                                    Hint = "Postcode",
                                     Type = "Text",
                                     Width = 12,
                                     Label = "Postcode"
