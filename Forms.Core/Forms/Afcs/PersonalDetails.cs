@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Forms.Core.EffectHandlers.Models;
 using Forms.Core.Models.Pages;
 using Forms.Core.Models.Questions;
 using Forms.Core.Models.Static;
 using Forms.Core.Models.Validation;
+using System.Linq;
 
 namespace Forms.Core.Forms.Afcs
 {
@@ -56,7 +58,7 @@ namespace Forms.Core.Forms.Afcs
                     {
                         Id = "contact-address",
                         NextPageId = "date-of-birth",
-                        Header = "What is your contact address?",
+                        Header = "What is your your address?",
                         IntroText = "We will send any postal correspondence to this address.",
                         Questions = new List<BaseQuestion>
                         {
@@ -64,7 +66,8 @@ namespace Forms.Core.Forms.Afcs
                             {
                                 Id = "question1",
                                 Type = "Text",
-                                Label = "Building name",
+                                Label = "Building and street",
+                                Hint = "Base name for military establishments",
                                 Validator = new TextInputValidation(new TextInputValidationProperties
                                 {
                                     IsRequired = true,
@@ -75,7 +78,7 @@ namespace Forms.Core.Forms.Afcs
                             {
                                 Id = "question2",
                                 Type = "Text",
-                                Label = "Street name",
+                                Label = "",
                                 Validator = new TextInputValidation(new TextInputValidationProperties
                                 {
                                     IsRequired = true,
@@ -117,6 +120,18 @@ namespace Forms.Core.Forms.Afcs
                                     IsRequired = true,
                                     MaxLength = 10
                                 })
+                            },
+                            new TextInputQuestion
+                            {
+                                Id = "question6",
+                                Type = "Text",
+                                Label = "Country (if overseas)",
+                                Width = 15,
+                                Validator = new TextInputValidation(new TextInputValidationProperties
+                                {
+                                    IsRequired = true,
+                                    MaxLength = 30
+                                })
                             }
                         }
                     },
@@ -139,14 +154,16 @@ namespace Forms.Core.Forms.Afcs
                     {
                         Id = "contact-number",
                         NextPageId = "contact-email",
-                        Header = "What is your contact number?",
+                        Header = "What is your telephone number?",
+                        IntroText = "We will use this to contact you if we have any questions about your claim.",
                         Questions = new List<BaseQuestion>
                         {
                             new TextInputQuestion
                             {
-                                Label = "Daytime contact number",
+                                Label = "Daytime Telephone Number",
                                 Id = "question1",
                                 Type = "Text",
+                                Hint = "For overseas numbers include the country code",
                                 Validator = new TelephoneValidation(new TelephoneValidationProperties())
                             },
                             new TextInputQuestion
@@ -154,7 +171,8 @@ namespace Forms.Core.Forms.Afcs
                                 Id = "question2",
                                 Type = "Text",
                                 Label =
-                                    "Alternative contact number",
+                                    "Mobile Telephone Number",
+                                 Hint = "For overseas numbers include the country code",
                                 Validator = new TelephoneValidation(new TelephoneValidationProperties())
                             }
                         }
@@ -162,7 +180,7 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                     {
                         Id = "contact-email",
-                        Header = "Email address",
+                        Header = "What is your email address?",
                         NextPageId = "national-insurance",
                         Questions = new List<BaseQuestion>
                         {
@@ -171,7 +189,8 @@ namespace Forms.Core.Forms.Afcs
                                 Id = "question1",
                                 Type = "email",
                                 Autocomplete = "email",
-                                Hint = "We will send confirmation of your claim to this address",
+                                Hint = "Please tell us the email address you would prefer us to contact you at. " +
+                                "We will only use this to get in touch about your claim.",
                                 Width = 50,
                                 Validator = new EmailValidation(new EmailValidationProperties())
                             }
@@ -207,7 +226,7 @@ namespace Forms.Core.Forms.Afcs
                                 Id = "question1",
                                 Options = new List<string>
                                 {
-                                    "1975", "2005", "2015", "None", "Other"
+                                    "1975", "2005", "2015", "None", "Other", "Don't know"
                                 }, //Please give details if selecting "Other"
                                 Validator = new RadioValidation(new RadioValidationProperties())
                             }
@@ -216,8 +235,8 @@ namespace Forms.Core.Forms.Afcs
                     new TaskQuestionPage
                     {
                         Id = "previous-claim",
-                        NextPageId = "afcs-fast-payment",
-                        Header = "Have you made a WPS or AFCS claim previously?",
+                        NextPageId = "gp-details",
+                        Header = "Have you made a war pension or armed forces compensation scheme claim previously?",
                         Questions = new List<BaseQuestion>
                         {
                             new RadioQuestion
@@ -226,20 +245,32 @@ namespace Forms.Core.Forms.Afcs
                                 Options = new List<string> {"Yes", "No"},
                                 Validator = new RadioValidation(new RadioValidationProperties())
                             }
+                        },
+                        
+                        Effects = new List<Effect>
+                        {
+                            new PathChangeEffect(x =>
+                                x.First().Answer.Values["default"] == "Yes"
+                                    ? "afcs-claim-reference"
+                                    : "gp-details")
                         }
                     },
                     new TaskQuestionPage
                     {
-                        Id = "afcs-fast-payment",
+                        Id = "afcs-claim-reference",
                         NextPageId = "gp-details",
-                        Header = "Have you received an AFCS Fast Payment?",
+                        Header = "What is the claim reference number (if known)?",
                         Questions = new List<BaseQuestion>
                         {
-                            new RadioQuestion
+                            new TextInputQuestion
                             {
                                 Id = "question1",
-                                Options = new List<string> {"Yes", "No"},
-                                Validator = new RadioValidation(new RadioValidationProperties())
+                                Type = "Text",
+                                Label = "",
+                                Validator = new TextInputValidation(new TextInputValidationProperties
+                                {
+                                    MaxLength = 50
+                                })
                             }
                         }
                     },
@@ -264,7 +295,7 @@ namespace Forms.Core.Forms.Afcs
                             {
                                 Id = "question2",
                                 Type = "Text",
-                                Label = "Building name",
+                                Label = "Building and street",
                                 Validator = new TextInputValidation(new TextInputValidationProperties
                                 {
                                     IsRequired = true,
@@ -275,7 +306,7 @@ namespace Forms.Core.Forms.Afcs
                             {
                                 Id = "question3",
                                 Type = "Text",
-                                Label = "Street name",
+                                Label = "",
                                 Validator = new TextInputValidation(new TextInputValidationProperties
                                 {
                                     IsRequired = true,
@@ -318,9 +349,21 @@ namespace Forms.Core.Forms.Afcs
                                     MaxLength = 10
                                 })
                             },
-                            new TextInputQuestion
+                             new TextInputQuestion
                             {
                                 Id = "question7",
+                                Type = "Text",
+                                Label = "Country (if overseas)",
+                                Width = 15,
+                                Validator = new TextInputValidation(new TextInputValidationProperties
+                                {
+                                    IsRequired = true,
+                                    MaxLength = 30
+                                })
+                            },
+                            new TextInputQuestion
+                            {
+                                Id = "question8",
                                 Type = "Text",
                                 Label = "Telephone number",
                                 Width = 10,
