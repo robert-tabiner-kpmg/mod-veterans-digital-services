@@ -10,13 +10,13 @@ using Forms.Core.Models.Validation;
 
 namespace Forms.Core.Forms.Afcs
 {
-    public static class NominateRepresentative
+    public static class NominateRepresentativeApplicant
     {
         public static Task Task => new Task
         {
-            Id = "nominate-representative-task",
+            Id = "nominate-representative-Applicant-task",
             SummaryPage = new SummaryPage(),
-            Name = "Do you want to nominate a representative?",
+            Name = "Who is making this application?",
             GroupNameIndex = 1,
             TaskItems = new List<ITaskItem>
             {
@@ -24,31 +24,29 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "nominate-someone-1",
                     NextPageId = "nominee-details",
-                    Header = "Do you want to nominate a representative?",
+                    Header = "Who is making this application?",
                     IntroText = new StringBuilder()
                         .Append(
-                            "<p>If someone is helping you make your claim, e.g. a charity welfare officer or a solicitor, you can nominate them as a representative to ask us how your claim is progressing or receive copies of our enquiries and decision letters.</p>")
+                            "<p>The person named in this application must be the person who completes the declaration and final submission when all sections are completed.</p>")
                         .Append(
-                            "<p>We can only give them this information if we have your written agreement. When a decision on your claim is made, we will, with your agreement, send a copy of the notification to your nominated representative.</p>")
-                        .Append(
-                            "<p><b>Please be aware</b> that the decision notification contains personal information. This may include details of your bank or building society account and any medical conditions that we have considered as part of your claim. It may also show how we have calculated your award.</p>")
-                        .Append(
-                            "<p>You can nominate 1 representative here but you can add further representatives or change their details by writing to us at any time.</p>")
+                            "<p>A claim may only be submitted on behalf of someone else if you have a Power of Attorney or other legal authority to act on their behalf.</p>")
+                        
                         .ToString(),
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
                         {
-                            Label = "Would you like to nominate a representative?",
+                            //Label = "Would you like to nominate a representative?",
                             Id = "question1",
-                            Options = new List<string> {"No", "Yes"},
-                            Validator = new RadioValidation(new RadioValidationProperties())
+                            Options = new List<string> { "The person named on this claim is making the application.", 
+                                "I am making an application on behalf of the person named claim on this and I have legal authority to act on their behalf."},
+                            Validator = new RadioValidation(new RadioValidationProperties() )
                         }
                     },
                     Effects = new List<Effect>
                     {
                         new PathChangeEffect(x =>
-                            x.First().Answer.Values["default"] == "Yes" ? "nominee-details" : "no-representative")
+                            x.First().Answer.Values["default"] == "The person named on this claim is making the application." ? "no-representative" : "nominee-details")
                     }
                 },
                 new TaskQuestionGhost("no-representative"),
@@ -56,7 +54,8 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "nominee-details",
                     NextPageId = "nomination-other-details",
-                    Header = "Please provide contact details for you nominated representative",
+                    Header = "What are your own details?",
+                    IntroText = "You have told us you are making this claim on behalf of someone else.  Please provide your own details and tell us why you are applying on their behalf.",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -70,7 +69,6 @@ namespace Forms.Core.Forms.Afcs
                                 MaxLength = 30
                             })
                         },
-                        
                         new TextInputQuestion
                         {
                             Label = "Building and street",
@@ -142,30 +140,37 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question2",
                             Type = "Text",
                             Validator = new EmailValidation(new EmailValidationProperties())
-                        }
+                        },
                     }
                 },
                 new TaskQuestionPage
                 {
                     Id = "nomination-other-details",
                     Header =
-                        "What is your representative’s role?",
+                        "What legal authority do you have to make a claim on behalf of the person named on?",
+                    IntroText = 
+                     new StringBuilder()
+                        .Append(
+                            "<p>E.g. Power of Attorney held.</p>")
+                        .Append(
+                            "<p>Please upload a copy of the legal authority document you hold in the ‘Upload Documents’ section later in this application.</p>")
+                        .ToString(),
+                   
                     Questions = new List<BaseQuestion>
                     {
-                        new RadioQuestion
+                         new TextInputQuestion
                         {
-                            Id = "question1",
-                            Options = new List<string> { "Veterans UK welfare manager", "Charity welfare manager","Solicitor","Friend or relative","Other"},
-                            Validator = new RadioValidation(new RadioValidationProperties())
-                        }
-                    },
-                    Effects = new List<Effect>
-                    {
-                        new PathChangeEffect(x =>
-                            x.First().Answer.Values["default"] == "Yes" ? "nominee-details" : "no-representative")
+                            Id = "question2",
+                            Type = "Text",
+                             Validator = new TextInputValidation(new TextInputValidationProperties
+                                {
+                                    MaxLength = 100,
+                                    IsRequired = true
+                                })
+                        },
+                        
                     }
-                    }
-                
+                }
             }
         };
     }

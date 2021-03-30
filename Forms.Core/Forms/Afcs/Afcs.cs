@@ -14,7 +14,7 @@ namespace Forms.Core.Forms.Afcs
             TaskGroups = new List<string>
             {
                 "Check before you start",
-                "Nominate a representative",
+                "Who is making this application?",
                 "About you",
                 "Your claim",
                 "Other details",
@@ -25,6 +25,7 @@ namespace Forms.Core.Forms.Afcs
             Tasks = new List<Task>
             {
                 ThingsToKnow.Task,
+                NominateRepresentativeApplicant.Task,
                 NominateRepresentative.Task,
                 PersonalDetails.Task,
                 ServiceDetails.Task,
