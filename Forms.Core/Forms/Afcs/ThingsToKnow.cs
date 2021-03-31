@@ -53,7 +53,7 @@ namespace Forms.Core.Forms.Afcs
                                     "</ul>")
                                 .Append("<h1 class=\"govuk-heading-m\">What you need to apply</h1>")
                              .Append(
-                                    "<p>You’ll need:</p>")
+                                    "<p>You&#39;ll need:</p>")
                                 .Append("<ul>")
                                 .Append(
                                     "<li>your bank, building society or credit union account details.</li>")
