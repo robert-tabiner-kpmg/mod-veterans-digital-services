@@ -31,76 +31,67 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             BodyText = new StringBuilder()
                                 .Append(
-                                    "<p>Things we need to see about your claimed condition. If they apply to your claim then please gather them together before you start.</p>")
+                                    "<p>Use this service to:</p>")
+                            .Append("<ul>")
                                 .Append(
-                                    "<p>If you do not have copies of the documents we ask for, do not delay in returning your claim form. You may send us additional information or documents later</p>")
+                                    "<li>make a claim for an Armed Forces Compensation Scheme or War Pension Scheme payment.</li>")
                                 .Append(
-                                    "<h1 class=\"govuk-heading-m\">Letters and reports from people who have treated you</h1>")
+                                    "<li>This single claim service is for both schemes.</li>")
+                             .Append(
+                                    "</ul>")
+                                .Append(
+                                    "<h1 class=\"govuk-heading-m\">Making a claim</h1>")
                                 .Append("<ul>")
                                 .Append(
-                                    "<li>GP's</li>")
+                                    "<li>You will be asked a series of questions about yourself, your service and the medical conditions you are claiming for.</li>")
                                 .Append(
-                                    "<li>Hospital doctors</li>")
+                                    "<li>You can make multiple claims in one application by ‘adding a further claim’ within the ‘claim’ section.</li>")
                                 .Append(
-                                    "<li>Specialist nurses</li>")
-                                .Append(
-                                    "<li>Psychiatrists or Psychologists at consultant grade</li>")
-                                .Append(
-                                    "<li>Occupational therapists</li>")
-                                .Append(
-                                    "<li>Physiotherapist</li>")
+                                    "<li>You can return to a partially completed application up to 3 months from when you started, providing you have fully completed the “Personal Details” section before you leave.</li>")
+                                
                                 .Append(
                                     "</ul>")
-                                .Append("<h1 class=\"govuk-heading-m\">Service documents such as</h1>")
+                                .Append("<h1 class=\"govuk-heading-m\">What you need to apply</h1>")
+                             .Append(
+                                    "<p>You’ll need:</p>")
                                 .Append("<ul>")
                                 .Append(
-                                    "<li>Part 1 orders</li>")
+                                    "<li>your bank, building society or credit union account details.</li>")
                                 .Append(
-                                    "<li>Admin instructions</li>")
+                                    "<li>an email address.</li>")
                                 .Append(
-                                    "<li>Authorisation papers</li>")
+                                    "<li>details about your service in the armed forces.</li>")
                                 .Append(
-                                    "<li>Accident report forms</li>")
+                                    "<li>information about the injury/illness you are claiming for.</li>")
                                 .Append(
-                                    "<li>Hurt certificates</li>")
+                                    "<li>letters/reports already in your possession from medical professionals who have treated you.</li>")
                                 .Append(
-                                    "<li>Service medical records</li>")
-                                .Append(
-                                    "</ul>")
-                                .Append("<h1 class=\"govuk-heading-m\">Medical test results including</h1>")
-                                .Append("<ul>")
-                                .Append(
-                                    "<li>Scans</li>")
-                                .Append(
-                                    "<li>Audiology</li>")
-                                .Append(
-                                    "<li>Reports of x-rays, but not the x-rays themselves</li>")
+                                    "<li>details of any other compensation you may have received. For example; <p>Criminal Injuries Compensation.</p><p>Civil Negligence claims.</p><p>Industrial Injuries Disablement Benefit.</p></li>")
                                 .Append(
                                     "</ul>")
-                                .Append("<h1 class=\"govuk-heading-m\">Letters about payment of</h1>")
-                                .Append("<ul>")
                                 .Append(
-                                    "<li>Criminal injuries compensation</li>")
+                                    "<p><b>We don’t need you to get any new information you do not already have. We can’t refund any costs involved if you do this.</b></p>")
+
+                                .Append("<h1 class=\"govuk-heading-m\">Dates, addresses and contact details:</h1>")
+                            .Append(
+                                    "<p>Several questions ask about dates and contact details relating to your service and places you have received medical treatment.  Please enter details to the best of your recollection, even if they are not complete.  For example, if you cannot recall exact dates, provide a best estimate even if this is just a year. You do not need to research details you do not already have and do not delay submitting your application.</p>")
+
+                             .Append("<h1 class=\"govuk-heading-m\">After you apply</h1>")
+                            .Append("<ul>")
                                 .Append(
-                                    "<li>Civil negligence compensation</li>")
+                                    "<li>We will register your claim and send you an acknowledgement.</li>")
                                 .Append(
-                                    "<li>Industrial injuries disablement benefit</li>")
+                                    "<li>We will gather information and medical evidence to support your claim.</li>")
                                 .Append(
-                                    "</ul>")
-                                .Append("<h1 class=\"govuk-heading-m\">Things we don't need to see</h1>")
-                                .Append("<ul>")
-                                .Append(
-                                    "<li>Appointment letters</li>")
-                                .Append(
-                                    "<li>General information about your medical conditions that are not about you personally</li>")
-                                .Append(
-                                    "<li>Fact sheets about your medication</li>")
-                                .Append(
-                                    "<li>Internet printouts</li>")
-                                .Append(
-                                    "<li>Letters about other benefits</li>")
+                                    "<li>After careful consideration of all the evidence, a decision will be made.</li>")
+                             .Append(
+                                    "<li>We will contact you with the outcome of your claim.</li>")
                                 .Append(
                                     "</ul>")
+                             .Append(
+                                    "<p>Depending on the nature of the injury/illness and the complexity of your claim, consideration of the evidence can take several months. Please be assured we will contact you as soon as a decision is made.</p>")
+
+                                
                                 .ToString()
                         }
                     }
