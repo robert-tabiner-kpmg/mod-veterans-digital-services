@@ -80,7 +80,7 @@ namespace Forms.Core.Forms.Afcs
                         {
                             Id = "question1",
                             Options = new List<string>
-                                {"Royal Navy", "Royal Army", "Royal Air Force", "Royal Marines"},
+                                {"Royal Navy", "Army", "Royal Air Force", "Royal Marines"},
                             Validator = new RadioValidation(new RadioValidationProperties
                             {
                                 RequiredMessage = "Select your service branch",

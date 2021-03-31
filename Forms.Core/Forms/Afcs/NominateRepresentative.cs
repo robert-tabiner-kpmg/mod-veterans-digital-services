@@ -56,7 +56,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "nominee-details",
                     NextPageId = "nomination-other-details",
-                    Header = "Please provide contact details for you nominated representative",
+                    Header = "Please provide contact details for your nominated representative",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -149,7 +149,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "nomination-other-details",
                     Header =
-                        "What is your representative’s role?",
+                        "What is your representative&#39s role?",
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
