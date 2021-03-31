@@ -45,9 +45,9 @@ namespace Forms.Core.Forms.Afcs
                                 .Append(
                                     "<li>You will be asked a series of questions about yourself, your service and the medical conditions you are claiming for.</li>")
                                 .Append(
-                                    "<li>You can make multiple claims in one application by ‘adding a further claim’ within the ‘claim’ section.</li>")
+                                    "<li>You can make multiple claims in one application by &#39;adding a further claim&#39; within the &#39;claim&#39; section.</li>")
                                 .Append(
-                                    "<li>You can return to a partially completed application up to 3 months from when you started, providing you have fully completed the “Personal Details” section before you leave.</li>")
+                                    "<li>You can return to a partially completed application up to 3 months from when you started, providing you have fully completed the &#8220;Personal Details&#8221; section before you leave.</li>")
                                 
                                 .Append(
                                     "</ul>")
@@ -70,7 +70,7 @@ namespace Forms.Core.Forms.Afcs
                                 .Append(
                                     "</ul>")
                                 .Append(
-                                    "<p><b>We don’t need you to get any new information you do not already have. We can’t refund any costs involved if you do this.</b></p>")
+                                    "<p><b>We don&#39;t need you to get any new information you do not already have. We can&#39;t refund any costs involved if you do this.</b></p>")
 
                                 .Append("<h1 class=\"govuk-heading-m\">Dates, addresses and contact details:</h1>")
                             .Append(
