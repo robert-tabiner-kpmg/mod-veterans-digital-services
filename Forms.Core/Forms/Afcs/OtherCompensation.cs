@@ -23,8 +23,10 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "received-compensation",
                     NextPageId = "compensation-condition",
-                    Header = "Are you claiming for or have you received compensation?",
-                    IntroText = "This includes any compensation from MOD for criminal injuries or for civil negligence, or compensation from civil authorities in Great Britain and Northern Ireland for criminal injuries.",
+                    Header = "Are you claiming for or have you received compensation payments from other sources?",
+                    IntroText = "You only need to tell us about compensation for the medical conditions you are claiming for on this application." +
+                    "<p>Compensation includes any payments from MOD for criminal injuries; civil negligence payments received via the courts; " +
+                    "compensation from civil authorities in Great Britain and Northern Ireland for criminal injuries or any other compensation payments received for the medical conditions you are claiming for.</p>",
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
@@ -45,7 +47,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "compensation-condition",
                     NextPageId = "claim-outcome",
-                    Header = "What condition(s) are you claiming or have you claimed compensation for?",
+                    Header = "What medical condition(s) have you received (or are you claiming) other compensation for?",
                     Questions = new List<BaseQuestion>
                     {
                         new TextareaQuestion
@@ -65,13 +67,13 @@ namespace Forms.Core.Forms.Afcs
                     Id = "claim-outcome",
                     NextPageId = "other-payment-received",
                     Header = "Claim outcome",
-                    IntroText = "Please include any reference numbers and details of the person or organisation.",
+                    IntroText = "Please include any reference numbers you have.",
                     Questions = new List<BaseQuestion>
                     {
                         new TextareaQuestion
                         {
                             Id = "question1",
-                            Label = "What is the status or what was the outcome of the claim?",
+                            Label = "Who did you claim from and what was the outcome of the claim?",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
                                 IsRequired = true,
@@ -148,6 +150,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-solicitor-help",
                     Header = "Did a solicitor help you with your claim for other compensation?",
+                    NextPageId = "claim-solicitor-details",
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
@@ -156,12 +159,17 @@ namespace Forms.Core.Forms.Afcs
                             Options = new List<string> {"Yes", "No"},
                             Validator = new RadioValidation(new RadioValidationProperties())
                         }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] == "Yes" ? "claim-solicitor-details" : "")
                     }
                 },
                 new TaskQuestionPage
                 {
                     Id = "claim-solicitor-details",
-                    Header = "What are the contact details of the solicitor that helped you with your claim?",
+                    Header = "What was the name and address of the solicitor who helped you?",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -182,12 +190,13 @@ namespace Forms.Core.Forms.Afcs
                         new TextInputQuestion
                         {
                             Id = "question3",
+                            Label = "",
                             Type = "Text"
                         },
                         new TextInputQuestion
                         {
                             Id = "question4",
-                            Hint = "Town of city",
+                            Label = "Town of city",
                             Type = "Text",
                             Width = 12,
                             Validator = new TextInputValidation(new TextInputValidationProperties())
@@ -195,7 +204,7 @@ namespace Forms.Core.Forms.Afcs
                         new TextInputQuestion
                         {
                             Id = "question5",
-                            Hint = "County",
+                            Label = "County",
                             Type = "Text",
                             Width = 12,
                             Validator = new TextInputValidation(new TextInputValidationProperties())
@@ -203,7 +212,7 @@ namespace Forms.Core.Forms.Afcs
                         new TextInputQuestion
                         {
                             Id = "question6",
-                            Hint = "Postcode",
+                            Label = "Postcode",
                             Type = "Text",
                             Width = 12,
                             Validator = new TextInputValidation(new TextInputValidationProperties())
@@ -214,7 +223,8 @@ namespace Forms.Core.Forms.Afcs
                             Label = "Telephone number",
                             Type = "Text",
                             Width = 12,
-                            Validator = new TelephoneValidation(new TelephoneValidationProperties())
+
+                           // Validator = new TelephoneValidation(new TelephoneValidationProperties())
                         }
                     }
                 },
