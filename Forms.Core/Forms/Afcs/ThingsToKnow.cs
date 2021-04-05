@@ -31,7 +31,7 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             BodyText = new StringBuilder()
                                 .Append(
-                                    "<p>Use this service to:</p>")
+                                    "<h1 class=\"govuk-heading-m\">Use this service to:</h1>")
                             .Append("<ul>")
                                 .Append(
                                     "<li>make a claim for an Armed Forces Compensation Scheme or War Pension Scheme payment.</li>")
@@ -66,7 +66,7 @@ namespace Forms.Core.Forms.Afcs
                                 .Append(
                                     "<li>letters/reports already in your possession from medical professionals who have treated you.</li>")
                                 .Append(
-                                    "<li>details of any other compensation you may have received. For example; <p>Criminal Injuries Compensation.</p><p>Civil Negligence claims.</p><p>Industrial Injuries Disablement Benefit.</p></li>")
+                                    "<li>details of any other compensation you may have received. For example;<ul> <li>Criminal Injuries Compensation.</li><li>Civil Negligence claims.</li><li>Industrial Injuries Disablement Benefit.</li></ul></li>")
                                 .Append(
                                     "</ul>")
                                 .Append(
