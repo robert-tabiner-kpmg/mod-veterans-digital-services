@@ -19,8 +19,34 @@ namespace Forms.Core.Forms.Afcs
                 new TaskQuestionPage
                 {
                     Id = "receiving-other-benefits",
-                    Header = "Are you receiving any of the following?",
-                    NextPageId = "receiving-industrial-benefit",
+                    Header = "Other benefits, allowances or entitlements you receive.",
+                    IntroText ="Payments from the Armed Forces Compensation Scheme and War Pension Scheme MAY affect " +
+                    "related benefits from the Department for Work and Pensions or other authorities.  " +
+                    "It is your responsibility to inform the relevant Benefit Office, local authority or " +
+                    "Tax Credit Office if you receive payments under one of the schemes.",
+                    NextPageId = "receiving-other-payments",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new CheckboxQuestion
+                        {
+                            Id = "question1",
+                            Label = "Are you receiving any of the following?",
+                            Options = new List<string>
+                            {
+                                "Tax credits paid to you or your family",
+                                "Housing Benefit or Council Tax Benefit",
+                                "Industrial Injuries Disablement Benefit"
+                            },
+                        }
+                    }
+                },
+
+                new TaskQuestionPage
+                {
+                    Id = "receiving-other-payments",
+                    Header = "Have you ever been paid any of the following?",
+                    IntroText ="These schemes make payments for certain illnesses caused by exposure to asbestos and dust.",
+                    NextPageId = "other-payment-details",
                     Questions = new List<BaseQuestion>
                     {
                         new CheckboxQuestion
@@ -28,83 +54,32 @@ namespace Forms.Core.Forms.Afcs
                             Id = "question1",
                             Options = new List<string>
                             {
-                                "Personal Independence Payment (PIP) or Disability Living Allowance (DLA)",
-                                "Income support",
-                                "Universal credit",
-                                "Income-related Employment and Support Allowance (ESA)",
-                                "Tax Credits paid to you or your family",
-                                "Housing Benefit and Council Tax Benefit"
+                                "Diffuse Mesothelioma 2014 Scheme",
+                                "Diffuse Mesothelioma 2008 Scheme",
+                                "The Workers Compensation 1979 Pneumoconiosis Act"
                             },
                         }
+
                     }
                 },
                 new TaskQuestionPage
                 {
-                    Id = "receiving-industrial-benefit",
-                    Header = "Are you receiving Industrial Injuries Disablement Benefit (IIDB)?",
-                    IntroText =
-                        "You may receive an Industrial Injuries Disablement Benefit (IIDB) if you became ill or are disabled because of an accident or disease either at work or on an approved employment training scheme or course.",
-                    NextPageId = "mesothelioma-payment",
+                    Id = "other-payment-details",
+                    Header = "Please tell us the date you received the payment(s) and the amount you received.",
                     Questions = new List<BaseQuestion>
                     {
-                        new RadioQuestion
+                        new TextInputQuestion
                         {
                             Id = "question1",
-                            Options = new List<string> {"Yes", "No"},
-                            Validator = new RadioValidation(new RadioValidationProperties())
-                        }
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = true,
+                                MaxLength = 100
+                            })
+                        },
                     }
                 },
-                new TaskQuestionPage
-                {
-                    Id = "mesothelioma-payment",
-                    Header = "Have you received payment under the Diffuse Mesothelioma Payment Scheme (DMPS)?",
-                    NextPageId = "mesothelioma-payment-2008",
-                    IntroText =
-                        "You may be claiming for this if you were diagnosed with diffuse mesothelioma on or after 25 July 2012.",
-                    Questions = new List<BaseQuestion>
-                    {
-                        new RadioQuestion
-                        {
-                            Id = "question1",
-                            Options = new List<string> {"Yes", "No"},
-                            Validator = new RadioValidation(new RadioValidationProperties())
-                        }
-                    }
-                },
-                new TaskQuestionPage
-                {
-                    Id = "mesothelioma-payment-2008",
-                    Header = "Have you received payment under the Diffuse Mesothelioma 2008 Scheme?",
-                    NextPageId = "pneumoconisos-payment",
-                    IntroText =
-                        "You may be claiming for this if you were diagnosed with diffuse mesothelioma before 25 July 2012.",
-                    Questions = new List<BaseQuestion>
-                    {
-                        new RadioQuestion
-                        {
-                            Id = "question1",
-                            Options = new List<string> {"Yes", "No"},
-                            Validator = new RadioValidation(new RadioValidationProperties())
-                        }
-                    }
-                },
-                new TaskQuestionPage
-                {
-                    Id = "pneumoconisos-payment",
-                    Header = "Have you received payment under The Workers Compensation 1979 Pneumoconiosis Act?",
-                    IntroText =
-                        "The Pneumoconiosis etc. (Workers’ Compensation) Act 1979 provides lump sum payments to sufferers of certain dust related industrial diseases.",
-                    Questions = new List<BaseQuestion>
-                    {
-                        new RadioQuestion
-                        {
-                            Id = "question1",
-                            Options = new List<string> {"Yes", "No"},
-                            Validator = new RadioValidation(new RadioValidationProperties())
-                        }
-                    }
-                },
+
             }
         };
     }
