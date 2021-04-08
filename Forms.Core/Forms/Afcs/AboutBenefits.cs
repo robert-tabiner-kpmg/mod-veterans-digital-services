@@ -23,7 +23,7 @@ namespace Forms.Core.Forms.Afcs
                     IntroText ="Payments from the Armed Forces Compensation Scheme and War Pension Scheme MAY affect " +
                     "related benefits from the Department for Work and Pensions or other authorities.  " +
                     "It is your responsibility to inform the relevant Benefit Office, local authority or " +
-                    "Tax Credit Office if you receive payments under one of the schemes.",
+                    "Tax Credit Office if you receive payments under one of their schemes.",
                     NextPageId = "receiving-other-payments",
                     Questions = new List<BaseQuestion>
                     {
@@ -31,11 +31,13 @@ namespace Forms.Core.Forms.Afcs
                         {
                             Id = "question1",
                             Label = "Are you receiving any of the following?",
+                            Hint ="Please tick any that apply",
                             Options = new List<string>
                             {
                                 "Tax credits paid to you or your family",
                                 "Housing Benefit or Council Tax Benefit",
-                                "Industrial Injuries Disablement Benefit"
+                                "Industrial Injuries Disablement Benefit",
+                                "None"
                             },
                         }
                     }
@@ -52,11 +54,13 @@ namespace Forms.Core.Forms.Afcs
                         new CheckboxQuestion
                         {
                             Id = "question1",
+                            Hint ="Please tick any that apply",
                             Options = new List<string>
                             {
                                 "Diffuse Mesothelioma 2014 Scheme",
                                 "Diffuse Mesothelioma 2008 Scheme",
-                                "The Workers Compensation 1979 Pneumoconiosis Act"
+                                "The Workers Compensation 1979 Pneumoconiosis Act",
+                                "None"
                             },
                         }
 

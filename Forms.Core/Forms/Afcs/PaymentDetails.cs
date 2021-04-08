@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Forms.Core.EffectHandlers.Models;
+using Forms.Core.Models.InFlight.Decision.Ghost;
 using Forms.Core.Models.Pages;
 using Forms.Core.Models.Questions;
 using Forms.Core.Models.Static;
@@ -18,9 +19,43 @@ namespace Forms.Core.Forms.Afcs
             SummaryPage = new SummaryPage(),
             TaskItems = new List<ITaskItem>
             {
+                 new TaskQuestionPage
+                {
+                    Id = "bank-details",
+                    Header = "Providing your bank account details?",
+                    IntroText = "Providing your bank account details now will speed up the payment process if your claim is successful. " +
+                     "If you would prefer not to provide your account details now, we will contact you again if any money is due to you " +
+                     "after your claim is assessed, although this will mean any payment will take longer to be received by you." +
+                     "<p><b>Note for Serving Personnel only:</b> If you are currently serving and receive your pay via the JPA system, we will pay any money due into the account your salary is paid into.</p>",
+                    NextPageId = "uk-bank-account-details",
+                    Questions = new List<BaseQuestion>
+                    {
+                        new RadioQuestion
+                        {
+                            Id = "question1",
+                            Label = "Do you wish to provide your bank account details?",
+                            Options = new List<string>
+                            {
+                                "Yes",
+                                "No – I am still serving so any payments will be made into my JPA salary account",
+                                "No – I don’t want to provide details now.  Please contact me again if my claim is successful"
+                            },
+                            Validator = new RadioValidation(new RadioValidationProperties())
+                        }
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                            "Yes"
+                                ? "bank-location"
+                                : "no-bank")
+                    }
+                },
+                new TaskQuestionGhost("no-bank"),
                 new TaskQuestionPage
                 {
-                    Id = "claim-illness",
+                    Id = "bank-location",
                     Header = "Where is your bank account located?",
                     NextPageId = "uk-bank-account-details",
                     Questions = new List<BaseQuestion>
@@ -49,13 +84,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "uk-bank-account-details",
                     Header = "UK bank or building society account details",
-                    IntroText="Providing your bank account details now will speed up the payment process " +
-                    "if your claim is successful.   If you would prefer not to provide your account details now, " +
-                    "please leave this section blank and we will contact you again " +
-                    "if any money is due to you after your claim is assessed." +
-                    "<p><b>Note for Serving Personnel only:</b> If you are currently serving and receive your pay via " +
-                    "the JPA system, we will pay any money due into the account your salary is paid into.  " +
-                    "Please leave this section blank and press ‘continue’. </p>",
+                    
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -65,7 +94,7 @@ namespace Forms.Core.Forms.Afcs
                             Type = "Text",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
-                                IsRequired = false,
+                                IsRequired = true,
                                 IsRequiredMessage = "Enter the name on the account",
                                 MaxLength = 50,
                                 MaxLengthMessage = "Name must be 50 characters or fewer",
@@ -94,7 +123,7 @@ namespace Forms.Core.Forms.Afcs
                             {
                                 IsNumber = true,
                                 IsNumberMessage = "Enter a valid account number like 00733445",
-                                IsRequired = false,
+                                IsRequired = true,
                                 IsRequiredMessage = "Enter an account number",
                                 MaxLength = 8,
                                 MaxLengthMessage = "Account number must be between 6 and 8 digits",
@@ -140,13 +169,6 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "overseas-bank-details",
                     Header = "Overseas bank account details",
-                    IntroText = "Providing your bank account details now will speed up the payment process " +
-                    "if your claim is successful.   If you would prefer not to provide your account details now, " +
-                    "please leave this section blank and we will contact you again " +
-                    "if any money is due to you after your claim is assessed. " +
-                    "<p><b>Note for Serving Personnel only:</b> If you are currently serving " +
-                    "and receive your pay via the JPA system, we will pay any money due into " +
-                    "the account your salary is paid into.  Please leave this section blank and press ‘continue’.</p>",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -156,7 +178,7 @@ namespace Forms.Core.Forms.Afcs
                             Type = "Text",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
-                                IsRequired = false,
+                                IsRequired = true,
                                 IsRequiredMessage = "Enter the name on the account",
                                 MaxLength = 50,
                                 MaxLengthMessage = "Name must be 50 characters or fewer",
@@ -185,7 +207,7 @@ namespace Forms.Core.Forms.Afcs
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
                                 IsNumber = true,
-                                IsRequired = false,
+                                IsRequired = true,
                                 MaxLength = 18,
                                 MinLength = 1,
                             }),
@@ -198,7 +220,7 @@ namespace Forms.Core.Forms.Afcs
                             Type = "Text",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
-                                IsRequired = false,
+                                IsRequired = true,
                                 MaxLength = 20,
                                 MinLength = 1,
                             }),
@@ -211,7 +233,7 @@ namespace Forms.Core.Forms.Afcs
                             Type = "Text",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
-                                IsRequired = false,
+                                IsRequired = true,
                                 MaxLength = 20,
                                 MinLength = 1,
                             }),
