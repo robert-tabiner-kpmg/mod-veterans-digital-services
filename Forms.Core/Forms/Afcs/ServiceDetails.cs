@@ -39,7 +39,7 @@ namespace Forms.Core.Forms.Afcs
                     NextPageId = "service-number",
                     Header = "What was/is your full name during this period of service?",
                     IntroText = "<p>If you used more than one name during this period of service, please include all names you used.</p>"+
-                    "<P>If you do not wish to disclose a name you used, please write ‘contact me for details’ and we will get in touch with you to discuss this further if we need to.</P>",
+                    "<P>If you do not wish to disclose a name you used, please write &#8216;contact me for details&#8217; and we will get in touch with you to discuss this further if we need to.</P>",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -166,7 +166,7 @@ namespace Forms.Core.Forms.Afcs
                     Id = "service-enlistment-date",
                     NextPageId = "service-discharge",
                     Header = "What was the date of your enlistment?",
-                    IntroText = "Please tell us the date for this period of service.  If you can’t remember exactly, include an estimated date even if this is only the year.",
+                    IntroText = "Please tell us the date for this period of service.  If you can&#39;t remember exactly, include an estimated date even if this is only the year.",
                     Questions = new List<BaseQuestion>
                     {
                         new DateInputQuestion
