@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Forms.Core.EffectHandlers.Models;
 using Forms.Core.Models.InFlight.Decision.Ghost;
 using Forms.Core.Models.Pages;
@@ -22,7 +23,7 @@ namespace Forms.Core.Forms.Afcs
                  new TaskQuestionPage
                 {
                     Id = "bank-details",
-                    Header = "Providing your bank account details?",
+                    Header = "Providing your bank account details",
                     IntroText = "Providing your bank account details now will speed up the payment process if your claim is successful. " +
                      "If you would prefer not to provide your account details now, we will contact you again if any money is due to you " +
                      "after your claim is assessed, although this will mean any payment will take longer to be received by you." +
@@ -37,8 +38,8 @@ namespace Forms.Core.Forms.Afcs
                             Options = new List<string>
                             {
                                 "Yes",
-                                "No – I am still serving so any payments will be made into my JPA salary account",
-                                "No – I don’t want to provide details now.  Please contact me again if my claim is successful"
+                                "No I am still serving so any payments will be made into my JPA salary account",
+                                "No I do not want to provide details now.  Please contact me again if my claim is successful"
                             },
                             Validator = new RadioValidation(new RadioValidationProperties())
                         }
@@ -152,8 +153,9 @@ namespace Forms.Core.Forms.Afcs
                         },
                         new TextInputQuestion
                         {
+                            
                             Id = "question5",
-                            Label = "If this is not your bank account, please tell us who’s account it is and why you have chosen this account",
+                            Label = "If this is not your bank account, please tell us whose account it is and why you have chosen this account",
                             Type = "Text",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
@@ -242,7 +244,7 @@ namespace Forms.Core.Forms.Afcs
                         new TextInputQuestion
                         {
                             Id = "question6",
-                            Label = "If this is not your bank account, please tell us who’s account it is and why you have chosen this account",
+                            Label = "If this is not your bank account, please tell us whose account it is and why you have chosen this account",
                             Type = "Text",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {

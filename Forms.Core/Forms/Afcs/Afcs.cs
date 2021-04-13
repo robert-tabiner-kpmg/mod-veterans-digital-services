@@ -52,8 +52,8 @@ namespace Forms.Core.Forms.Afcs
                     "with United Kingdom Special Forces (UKSF) must seek advice from the MOD A Block Disclosure Cell before completing the claim form. " +
                     "If you have served at any time after 1996, you will be subject to the UKSF Confidentiality Contract and must apply for " +
                     "Express Prior Authority in Writing (EPAW) through the Disclosure Cell before submitting a claim where you may be asked " +
-                    "to disclose details of your service with UKSF or any units directly supporting them.The Disclosure Cell can be contacted " +
-                    "by emailing <a href=''> MAB-J1-Disclosures-ISA-Mailbox@mod.gov.uk.</a></p>")
+                    "to disclose details of your service with UKSF or any units directly supporting them.The Disclosure Cell can be contacted " +
+                    "by emailing <a class='govuk-link' href=''> MAB-J1-Disclosures-ISA-Mailbox@mod.gov.uk.</a></p>")
                 .Append("<p><strong>Make a claim online</strong></p>")
                 .Append("<p>You can use the online claim service to make a claim for an Armed Forces Compensation Scheme or War Pension payment.</p>")
                 .Append("<p><strong>Make a claim by post</strong></p>")

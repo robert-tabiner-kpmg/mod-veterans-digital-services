@@ -16,13 +16,18 @@ namespace Forms.Core.Forms.Afcs
             PreTaskPage = new PreTaskPage()
             {
                 Header = "Service details",
-                Body = "<p>You can add details for more than one period of service. A period of service is defined as a term of service between enlistment and discharge within one service type.</p>",
+                Body = "<p>We need to know about each period of service you have had in HM Armed Forces.  " +
+                "A period of service is defined as a term of service between enlistment and discharge within one service type.</p>" +
+                "<p>If you have had more than one period of service," +
+                "or changed services for example from Royal Navy to Army," +
+                "please tell us about each period of service separately.You will be able to add details of more periods of service at the end of this section.<p>",
                 BeginLinkText = "Add a period of service"
             },
             PostTaskPage = new RepeatTaskPage
             {
                 Header = "Service details",
-                Body = "You can add details for more than one period of service. A period of service is defined as...",
+                SummaryTableText = "Service Period",
+                Body = "You can add details of another period of service or click continue to go to the next section.",
                 RepeatLinkText = "Add another period of service"
             },
             SummaryPage = new SummaryPage(),
@@ -32,7 +37,9 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "service-name",
                     NextPageId = "service-number",
-                    Header = "What was/is your full name in service?",
+                    Header = "What was/is your full name during this period of service?",
+                    IntroText = "<p>If you used more than one name during this period of service, please include all names you used.</p>"+
+                    "<P>If you do not wish to disclose a name you used, please write ‘contact me for details’ and we will get in touch with you to discuss this further if we need to.</P>",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -53,6 +60,7 @@ namespace Forms.Core.Forms.Afcs
                     Id = "service-number",
                     NextPageId = "service-branch",
                     Header = "What is your service number?",
+                    IntroText = "<p>Please tell us the service number you had for this period of service.</p>",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -73,7 +81,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "service-branch",
                     NextPageId = "service-type",
-                    Header = "What is your service branch?",
+                    Header = "What was/is your service branch?",
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
@@ -86,7 +94,7 @@ namespace Forms.Core.Forms.Afcs
                                 RequiredMessage = "Select your service branch",
                                 ValidOptionsMessage = "Select your service branch",
                                 ValidOptions = new[]
-                                    {"Royal Navy", "Royal Army", "Royal Air Force", "Royal Marines"}
+                                    {"Royal Navy", "Army", "Royal Air Force", "Royal Marines"}
                             })
                         }
                     }
@@ -95,17 +103,17 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "service-type",
                     NextPageId = "service-rank",
-                    Header = "What is your service type?",
+                    Header = "What was/is your service type?",
                     Questions = new List<BaseQuestion>
                     {
                         new RadioQuestion
                         {
                             Id = "question1",
-                            Options = new List<string> {"Regular", "Reserve", "Gurkhas"},
+                            Options = new List<string> {"Regular", "Reserve (includes Full Time Reserve Service)"},
                             Validator = new RadioValidation(new RadioValidationProperties
                             {
                                 RequiredMessage = "Select your service type",
-                                ValidOptions = new[] {"Regular", "Reserve", "Gurkhas"},
+                                ValidOptions = new[] {"Regular", "Reserve (includes Full Time Reserve Service)"},
                                 ValidOptionsMessage = "Select your service type"
                             })
                         }
@@ -136,7 +144,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "service-trade",
                     NextPageId = "service-enlistment-date",
-                    Header = "What was/is your trade?",
+                    Header = "What was/is your trade or specialism?",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -158,12 +166,14 @@ namespace Forms.Core.Forms.Afcs
                     Id = "service-enlistment-date",
                     NextPageId = "service-discharge",
                     Header = "What was the date of your enlistment?",
+                    IntroText = "Please tell us the date for this period of service.  If you can’t remember exactly, include an estimated date even if this is only the year.",
                     Questions = new List<BaseQuestion>
                     {
                         new DateInputQuestion
                         {
+                            
                             Id = "question1",
-                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true, IsRequired=false})
                         }
                     }
                 },
@@ -172,18 +182,19 @@ namespace Forms.Core.Forms.Afcs
                     Id = "service-discharge",
                     NextPageId = "unit-address",
                     Header = "What was the date of and reason for your discharge?",
+                    IntroText="Please tell us the date (if you are no longer serving) you left this period of service.  If you can&#39;t remember exactly, include an estimated date even if this is only the year.",
                     Questions = new List<BaseQuestion>
                     {
                         // TODO - validation here is a little tricky
                         new CheckboxQuestion()
                         {
                             Id = "question2",
-                            Options = new List<string> {"Currently serving"}
+                            Options = new List<string> {"I am still serving"}
                         },
                         new DateInputQuestion
                         {
                             Id = "question1",
-                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true})
+                            Validator = new DateInputValidation(new DateInputValidationProperties {IsInPast = true, IsRequired=false})
                         },
                         new TextInputQuestion
                         {
@@ -200,7 +211,8 @@ namespace Forms.Core.Forms.Afcs
                 new TaskQuestionPage
                 {
                     Id = "unit-address",
-                    Header = "What is the address of your current/last service unit?",
+                    Header = "What was/is the address of your current/last service unit?",
+                    IntroText = "Please include details to your best recollection for this period of service, even if the location has since closed down.",
                     Questions = new List<BaseQuestion>
                     {
                         new TextInputQuestion
@@ -243,6 +255,17 @@ namespace Forms.Core.Forms.Afcs
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
                                 MaxLength = 30
+                            })
+                        },
+                        new TextInputQuestion
+                        {
+                            Id = "question5",
+                            Type = "Text",
+                            Label = "Country",
+                            Width = 15,
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                MaxLength = 30, IsRequired = false
                             })
                         },
                         new TextInputQuestion
