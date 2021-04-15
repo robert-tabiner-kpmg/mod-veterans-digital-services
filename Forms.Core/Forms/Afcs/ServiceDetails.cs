@@ -19,8 +19,8 @@ namespace Forms.Core.Forms.Afcs
                 Body = "<p>We need to know about each period of service you have had in HM Armed Forces.  " +
                 "A period of service is defined as a term of service between enlistment and discharge within one service type.</p>" +
                 "<p>If you have had more than one period of service," +
-                "or changed services for example from Royal Navy to Army," +
-                "please tell us about each period of service separately.You will be able to add details of more periods of service at the end of this section.<p>",
+                "or changed branches services for example from Royal Navy to Army, " +
+                "please tell us about each period separately. You will be able to add further periods of service at the end of this section.<p>",
                 BeginLinkText = "Add a period of service"
             },
             PostTaskPage = new RepeatTaskPage
@@ -38,7 +38,7 @@ namespace Forms.Core.Forms.Afcs
                     Id = "service-name",
                     NextPageId = "service-number",
                     Header = "What was/is your full name during this period of service?",
-                    IntroText = "<p>If you used more than one name during this period of service, please include all names you used.</p>"+
+                    IntroText = "<p>If you used more than one name, please include all names you used.</p>"+
                     "<P>If you do not wish to disclose a name you used, please write &#8216;contact me for details&#8217; and we will get in touch with you to discuss this further if we need to.</P>",
                     Questions = new List<BaseQuestion>
                     {
