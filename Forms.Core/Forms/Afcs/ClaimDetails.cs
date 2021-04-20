@@ -15,12 +15,12 @@ namespace Forms.Core.Forms.Afcs
         public static Task Task => new Task
         {
             Id = "claims-details-task",
-            Name = "Claim and medical details",
+            Name = "Claim Details",
             GroupNameIndex = 3,
             SummaryPage = new SummaryPage(),
             PostTaskPage = new RepeatTaskPage
             {
-                Header = "Claim and medical details",
+                Header = "Claim Details",
                 RepeatLinkText = "Add another claim",
                 SummaryTableText = "Claim"
             },
@@ -28,8 +28,8 @@ namespace Forms.Core.Forms.Afcs
             {
                 Header = "Claim and medical details",
                 Body = new StringBuilder()
-                    .Append("<p>This form allows you to make multiple claims based on individual injuries, illnesses or conditions that have occured at different points in time as a result of your service.</p>")
-                    .Append("<p>For a specific accident or incident you can add all of the injuries and conditions sustained in a single claim.</p>")
+                    .Append("<p>This form allows you to make multiple claims for individual injuries, illnesses or medical conditions that have occurred at different points in time as a result of your service.</p>")
+                    .Append("<p>For a specific accident or incident, you can include all of the injuries and conditions sustained within a single claim.</p>")
                     .ToString(),
                 BeginLinkText = "Add a claim"
             },
@@ -464,7 +464,7 @@ namespace Forms.Core.Forms.Afcs
                         new TextareaQuestion
                         {
                             Id = "question1",
-                            Hint = "Please include all claimed medical conditions relating to the incident. " +
+                            Hint = "Please include all claimed medical conditions you think are linked to the incident, even if they developed afterwards. " +
                             "Tell us which side of the body is affected where needed (e.g. left arm)",
                             Rows = 5,
                             Validator = new TextInputValidation(new TextInputValidationProperties
@@ -796,6 +796,7 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "claim-accident-non-sporting-direct-route",
                     Header = "Were you on a direct route?",
+                    IntroText = "A direct route means you took a reasonable route from start to end and did not divert for personal reasons, e.g. to visit a friend.",
                     NextPageId = "claim-accident-non-sporting-reported-to",
                     Questions = new List<BaseQuestion>
                     {
@@ -1164,8 +1165,8 @@ namespace Forms.Core.Forms.Afcs
                         new TextareaQuestion
                         {
                             Id = "question1",
-                            Hint = "Please include all claimed medical conditions relating to the incident. " +
-                            "Tell us which side of the body is affected where needed (e.g. leftarm)",
+                            Hint = "Please include all claimed medical conditions you think are linked to the incident, even if they developed afterwards. " +
+                            "Tell us which side of the body is affected where needed (e.g. left arm)",
                             Rows = 5,
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
