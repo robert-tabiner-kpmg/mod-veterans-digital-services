@@ -26,7 +26,7 @@ namespace Forms.Core.Forms.Afcs
             },
             PreTaskPage = new PreTaskPage
             {
-                Header = "Claim and medical details",
+                Header = "Claim Details",
                 Body = new StringBuilder()
                     .Append("<p>This form allows you to make multiple claims for individual injuries, illnesses or medical conditions that have occurred at different points in time as a result of your service.</p>")
                     .Append("<p>For a specific accident or incident, you can include all of the injuries and conditions sustained within a single claim.</p>")
