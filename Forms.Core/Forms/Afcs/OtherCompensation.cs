@@ -163,9 +163,10 @@ namespace Forms.Core.Forms.Afcs
                     Effects = new List<Effect>
                     {
                         new PathChangeEffect(x =>
-                            x.First().Answer.Values["default"] == "Yes" ? "claim-solicitor-details" : "")
+                            x.First().Answer.Values["default"] == "Yes" ? "claim-solicitor-details" : "no-solicitor")
                     }
                 },
+                 new TaskQuestionGhost("no-solicitor"),
                 new TaskQuestionPage
                 {
                     Id = "claim-solicitor-details",
