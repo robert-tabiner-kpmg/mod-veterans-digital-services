@@ -3,6 +3,9 @@ using Forms.Core.Models.Pages;
 using Forms.Core.Models.Questions;
 using Forms.Core.Models.Static;
 using Forms.Core.Models.Validation;
+using Forms.Core.EffectHandlers.Models;
+using System.Linq;
+using Forms.Core.Models.InFlight.Decision.Ghost;
 
 namespace Forms.Core.Forms.Afcs
 {
@@ -47,25 +50,33 @@ namespace Forms.Core.Forms.Afcs
                 {
                     Id = "receiving-other-payments",
                     Header = "Have you ever been paid any of the following?",
-                    IntroText ="These schemes make payments for certain illnesses caused by exposure to asbestos and dust.",
+                    IntroText ="These schemes make payments for certain illnesses caused by exposure to asbestos and dust."+
+                    "<ul><li>Diffuse Mesothelioma 2014 Scheme</li><li>Diffuse Mesothelioma 2008 Scheme</li>" +
+                    "<li>The Workers Compensation 1979 Pneumoconiosis Act</li></ul>",
                     NextPageId = "other-payment-details",
-                    Questions = new List<BaseQuestion>
+                   Questions = new List<BaseQuestion>
                     {
-                        new CheckboxQuestion
+                        new RadioQuestion
                         {
                             Id = "question1",
-                            Hint ="Please tick any that apply",
                             Options = new List<string>
                             {
-                                "Diffuse Mesothelioma 2014 Scheme",
-                                "Diffuse Mesothelioma 2008 Scheme",
-                                "The Workers Compensation 1979 Pneumoconiosis Act",
-                                "None"
+                                "Yes",
+                                "No"
                             },
+                            Validator = new RadioValidation(new RadioValidationProperties())
                         }
-
+                    },
+                    Effects = new List<Effect>
+                    {
+                        new PathChangeEffect(x =>
+                            x.First().Answer.Values["default"] ==
+                                "Yes"
+                                ? "other-payment-details"
+                                : "no-payments-received")
                     }
                 },
+                new TaskQuestionGhost("no-payments-received"),
                 new TaskQuestionPage
                 {
                     Id = "other-payment-details",
@@ -75,9 +86,33 @@ namespace Forms.Core.Forms.Afcs
                         new TextInputQuestion
                         {
                             Id = "question1",
+                            Label ="Diffuse Mesothelioma 2014 Scheme",
+                            Hint="Date payment received and amount: ",
                             Validator = new TextInputValidation(new TextInputValidationProperties
                             {
-                                IsRequired = true,
+                                IsRequired = false,
+                                MaxLength = 100
+                            })
+                        },
+                         new TextInputQuestion
+                        {
+                            Id = "question2",
+                            Label ="Diffuse Mesothelioma 2008 Scheme",
+                            Hint="Date payment received and amount: ",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = false,
+                                MaxLength = 100
+                            })
+                        },
+                          new TextInputQuestion
+                        {
+                            Id = "question3",
+                            Label ="The Workers Compensation 1979 Pneumoconiosis Act",
+                            Hint="Date payment received and amount: ",
+                            Validator = new TextInputValidation(new TextInputValidationProperties
+                            {
+                                IsRequired = false,
                                 MaxLength = 100
                             })
                         },
